@@ -1,0 +1,10 @@
+before_script:
+  - export ANDROID_HOME=/usr/local/share/android-sdk
+
+stages:
+  - test
+
+check:
+  stage: test
+  script:
+    - ./gradlew check

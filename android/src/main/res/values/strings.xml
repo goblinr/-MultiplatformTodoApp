@@ -1,0 +1,7 @@
+<resources>
+    <string name="app_name">MultiPlatformSample</string>
+    <string name="title">Title</string>
+    <string name="description">Description</string>
+    <string name="create">Create</string>
+    <string name="creating">Creating…</string>
+</resources>

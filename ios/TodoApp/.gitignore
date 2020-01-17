@@ -1,0 +1,17 @@
+**/*.xcodeproj/xcuserdata
+**/*.xcodeproj/project.xcworkspace/xcuserdata
+**/*.xcodeproj/project.xcworkspace/xcuserdata/xcdebugger/*.xcbkptlist
+**/*.xcworkspace/xcuserdata/xcdebugger/*.xcbkptlist
+*.xcworkspace/xcuserdata/xcdebugger/*.xcbkptlist
+**/*.xcworkspace/xcuserdata
+*.xcworkspace/xcuserdata
+*.xcworkspace/xcshareddata
+xcuserdata/
+.DS_Store
+vendor/
+output/
+tests_results/
+fastlane/report.xml
+Pods/
+fastlane/test_output
+build
