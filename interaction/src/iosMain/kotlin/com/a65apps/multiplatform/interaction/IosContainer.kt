@@ -4,7 +4,7 @@ import com.badoo.reaktive.disposable.Disposable
 import com.badoo.reaktive.observable.observeOn
 import com.badoo.reaktive.observable.subscribe
 
-class IosContainer<S: State, A: Action>(
+class IosContainer<S : State, A : Action>(
     private val schedulers: Schedulers,
     private val closure: (S) -> Unit
 ) {
