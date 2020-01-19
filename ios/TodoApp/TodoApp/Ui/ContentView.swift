@@ -11,18 +11,24 @@ import Interaction
 
 struct ContentView: View {
     
-    @ObservedObject var router: SwiftUIRouter = SwiftUIRouter()
-    @ObservedObject var model = MainModel()
+    @ObservedObject var navigator: Navigator
+    @ObservedObject var model: MainModel
+    
+    private let todoListAssembly = TodoListAssembly.instance()
     
     var body: some View {
         NavigationView {
             VStack {
-                NavigationLink(destination: TodoListView(mainStore: { self.model.getContainer().store }, router: router), tag: Screen.todoList, selection: $router.screen) {
+                NavigationLink(
+                    destination: TodoListView(navigator: self.navigator.self, model: todoListAssembly.todoListModel),
+                    tag: Screen.todoList,
+                    selection: $navigator.screen
+                ) {
                     EmptyView()
                 }.hidden()
             }
         }.onAppear() {
-            self.model.onAppear(router: self.router.self)
+            self.model.onAppear(navigator: self.navigator.self, store: MainAssemly.instance().mainStore)
         }.onDisappear() {
             self.model.onDisappear()
         }
@@ -31,10 +37,28 @@ struct ContentView: View {
 
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
+    
+    static let defaultState = MainModel()
+    static var defaultNavigation: Navigator {
+        get {
+            let nav = Navigator()
+            nav.screen = Screen.todoList
+            return nav
+        }
+    }
+    
     static var previews: some View {
-        ContentView()
-            .environment(\.taskRepository, MockTaskRepository())
-            .environment(\.schedulers, IosSchedulers())
+        Group {
+            ContentView(
+                navigator: defaultNavigation,
+                model: defaultState
+            )
+            
+            ContentView(
+                navigator: defaultNavigation,
+                model: defaultState
+            ).environment(\.colorScheme, .dark)
+        }
     }
 }
 #endif

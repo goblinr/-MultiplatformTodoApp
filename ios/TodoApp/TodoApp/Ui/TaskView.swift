@@ -37,13 +37,26 @@ struct TaskView: View {
 
 struct TaskView_Previews: PreviewProvider {
     static var previews: some View {
-        TaskView(
-            task: TaskPresentable(
-                id: "id",
-                title: "title",
-                description: "description",
-                status: TaskStatus.pending
-            )
-        )
+        Group {
+            TaskView(
+                task: TaskPresentable(
+                    id: "id",
+                    title: "title",
+                    description: "description",
+                    status: TaskStatus.pending
+                )
+                ).previewLayout(PreviewLayout.fixed(width: CGFloat(300), height: CGFloat(80)))
+                .previewDisplayName("Pending")
+            
+            TaskView(
+                task: TaskPresentable(
+                    id: "id",
+                    title: "title",
+                    description: "description",
+                    status: TaskStatus.done
+                )
+            ).previewLayout(PreviewLayout.fixed(width: CGFloat(300), height: CGFloat(80)))
+            .previewDisplayName("Done")
+        }
     }
 }

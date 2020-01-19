@@ -97,3 +97,33 @@ final class NetworkTaskRepository : AbstractTaskRepository {
         }
     }
 }
+
+#if DEBUG
+final class MockTaskRepository : AbstractTaskRepository {
+    
+    override func blockingTasks(success: @escaping ([Task]) -> Void, error: @escaping (KotlinThrowable) -> Void) {
+        success(
+            FreezeKt.freezeTaskList(list: [
+                Task(id: "1", title: "One", description: "First task", status: TaskStatus.pending),
+                Task(id: "2", title: "Two", description: "Second task", status: TaskStatus.done)
+            ])
+        )
+    }
+    
+    override func blockingSwitchTask(id: String, success: @escaping () -> Void, error: @escaping (KotlinThrowable) -> Void) {
+        
+    }
+    
+    override func blockingArchiveTask(success: @escaping () -> Void, error: @escaping (KotlinThrowable) -> Void) {
+        
+    }
+    
+    override func blockingUnarchiveTask(success: @escaping () -> Void, error: @escaping (KotlinThrowable) -> Void) {
+        
+    }
+    
+    override func blockingCreateTask(title: String, description: String, success: @escaping (Task) -> Void, error: @escaping (KotlinThrowable) -> Void) {
+        
+    }
+}
+#endif

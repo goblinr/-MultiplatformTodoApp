@@ -8,6 +8,7 @@ target 'TodoApp' do
   # Pods for TodoApp
   pod 'Alamofire-Synchronous', '~> 4.0'
   pod 'SwiftyJSON', '~> 4.0'
+  pod "EasyDi"
 
   target 'TodoAppTests' do
     inherit! :search_paths

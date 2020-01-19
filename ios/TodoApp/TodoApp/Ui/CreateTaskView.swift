@@ -11,9 +11,8 @@ import Interaction
 
 struct CreateTaskView: View {
     
-    let mainStore: () -> MainStore
-    
-    @ObservedObject private var model = CreateTaskModel()
+    @ObservedObject var model: CreateTaskModel
+    var mainStore: Store<MainState, MainAction>
     
     @SwiftUI.State private var title = ""
     @SwiftUI.State private var description = ""
@@ -68,26 +67,79 @@ struct CreateTaskView: View {
             }
     }.navigationBarTitle(Screen.createTask.description()).navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(
-            action: { self.mainStore().acceptAction(
+            action: { self.mainStore.acceptAction(
                 action: MainAction.NavigateBack()
             ) },
             label: { Text("< Back") }
-        ))
-        .onAppear() {
-            self.model.onAppear()
+        )).onAppear() {
+            self.model.onAppear(store: CreateTaskAssembly.instance().createTaskStore)
         }.onDisappear() {
             self.model.onDisappear()
         }
     }
 }
 
+#if DEBUG
 struct CreateTaskView_Previews: PreviewProvider {
+    
+    static var defaultState: CreateTaskModel {
+        get {
+            let model = CreateTaskModel()
+            return model
+        }
+    }
+    
+    static var loadingState: CreateTaskModel {
+        get {
+            let model = CreateTaskModel()
+            model.isLoading = true
+            return model
+        }
+    }
+    
+    static var errorState: CreateTaskModel {
+        get {
+            let model = CreateTaskModel()
+            model.error = "Error"
+            return model
+        }
+    }
+    
+    static var resultState: CreateTaskModel {
+        get {
+            let model = CreateTaskModel()
+            model.result = Task(
+                id: "id",
+                title: "title",
+                description: "description",
+                status: TaskStatus.pending
+            )
+            return model
+        }
+    }
+    
     static var previews: some View {
-        CreateTaskView(mainStore: { MainStore(
-        reducer: MainReducer(),
-        middleware: [],
-        initialState: MainStateProvider(restoredState: nil),
-        stateSubjectProvider: DefaultStateSubjectProvider(),
-        restoredState: nil)})
+        Group {
+            CreateTaskView(
+                model: defaultState,
+                mainStore: MainAssemly.instance().mainStore
+            ).previewDisplayName("Default")
+            
+            CreateTaskView(
+                model: loadingState,
+                mainStore: MainAssemly.instance().mainStore
+            ).previewDisplayName("Loading")
+            
+            CreateTaskView(
+                model: errorState,
+                mainStore: MainAssemly.instance().mainStore
+            ).previewDisplayName("Error")
+            
+            CreateTaskView(
+                model: resultState,
+                mainStore: MainAssemly.instance().mainStore
+            ).previewDisplayName("Result")
+        }
     }
 }
+#endif

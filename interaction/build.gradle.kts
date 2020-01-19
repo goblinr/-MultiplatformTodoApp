@@ -20,6 +20,7 @@ kotlin {
             framework {
                 baseName = "Interaction"
                 export(project(":domain"))
+                freeCompilerArgs = freeCompilerArgs + "-Xobjc-generics"
             }
         }
     }
