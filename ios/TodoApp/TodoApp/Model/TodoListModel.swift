@@ -30,3 +30,23 @@ final class TodoListModel : ObservableObject {
         container?.onDisappear()
     }
 }
+
+final class TodoListFactory {
+    
+    static func create(schedulers: Schedulers, model: TodoListModel) -> IosContainer<TodoState, TodoAction> {
+        return IosContainer<TodoState, TodoAction>(schedulers: schedulers) { state in
+            print(state)
+            model.isLoading = state.isLoading
+            model.error = state.error
+            model.tasks = state.todoList.map {
+                TaskPresentable(
+                    id: $0.id,
+                    title: $0.title,
+                    description: $0.component3(),
+                    status: $0.status
+                )
+            }
+            model.showArchive = state.showArchive
+        }
+    }
+}

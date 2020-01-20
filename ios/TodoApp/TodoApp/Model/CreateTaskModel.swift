@@ -31,3 +31,17 @@ final class CreateTaskModel : ObservableObject {
         container?.onDisappear()
     }
 }
+
+final class CreateTaskFactory {
+    
+    static func create(schedulers: Schedulers, model: CreateTaskModel) -> IosContainer<CreateState, CreateAction> {
+        return IosContainer<CreateState, CreateAction>(schedulers: schedulers) { state in
+            print(state)
+            model.isLoading = state.isLoading
+            model.error = state.error
+            model.title = state.title
+            model.description = state.component4()
+            model.result = state.result
+        }
+    }
+}

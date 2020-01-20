@@ -15,6 +15,7 @@ struct ContentView: View {
     @ObservedObject var model: MainModel
     
     private let todoListAssembly = TodoListAssembly.instance()
+    private let mainAssembly = MainAssemly.instance()
     
     var body: some View {
         NavigationView {
@@ -28,7 +29,7 @@ struct ContentView: View {
                 }.hidden()
             }
         }.onAppear() {
-            self.model.onAppear(navigator: self.navigator.self, store: MainAssemly.instance().mainStore)
+            self.model.onAppear(navigator: self.navigator.self, store: self.mainAssembly.mainStore)
         }.onDisappear() {
             self.model.onDisappear()
         }

@@ -17,6 +17,8 @@ struct CreateTaskView: View {
     @SwiftUI.State private var title = ""
     @SwiftUI.State private var description = ""
     
+    private let createTaskAssembly = CreateTaskAssembly.instance()
+    
     var body: some View {
         VStack {
             Spacer()
@@ -72,7 +74,7 @@ struct CreateTaskView: View {
             ) },
             label: { Text("< Back") }
         )).onAppear() {
-            self.model.onAppear(store: CreateTaskAssembly.instance().createTaskStore)
+            self.model.onAppear(store: self.createTaskAssembly.createTaskStore)
         }.onDisappear() {
             self.model.onDisappear()
         }

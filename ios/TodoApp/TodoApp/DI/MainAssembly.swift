@@ -29,14 +29,12 @@ class MainAssemly: Assembly {
     }
     
     var mainModel: MainModel {
-        return define(init: MainModel()) { model in
-            model.router = self.navigationAssembly.router
-            model.schedulers = self.schedulersAssembly.schedulers
-            model.container = IosContainer<MainState, MainAction>(schedulers: self.schedulersAssembly.schedulers) { state in
-                print(state)
-                model.state = state
-            }
-            return model
+        return define(scope: .weakSingleton, init: MainModel()) {
+            print("Inject MainModel")
+            $0.router = self.navigationAssembly.router
+            $0.schedulers = self.schedulersAssembly.schedulers
+            $0.container = MainContainerFactory.create(schedulers: self.schedulersAssembly.schedulers, model: $0)
+            return $0
         }
     }
     

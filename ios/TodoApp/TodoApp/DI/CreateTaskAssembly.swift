@@ -27,16 +27,10 @@ class CreateTaskAssembly: Assembly {
     }
     
     var createTaskModel: CreateTaskModel {
-        return define(init: CreateTaskModel()) { model in
-            model.container = IosContainer<CreateState, CreateAction>(schedulers: self.schedulersAssembly.schedulers) { state in
-                print(state)
-                model.isLoading = state.isLoading
-                model.error = state.error
-                model.title = state.title
-                model.description = state.component4()
-                model.result = state.result
-            }
-            return model
+        return define(scope: .weakSingleton, init: CreateTaskModel()) {
+            print("Inject CreateTaskModel")
+            $0.container = CreateTaskFactory.create(schedulers: self.schedulersAssembly.schedulers, model: $0)
+            return $0
         }
     }
     

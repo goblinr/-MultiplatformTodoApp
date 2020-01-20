@@ -33,22 +33,10 @@ class TodoListAssembly: Assembly {
     }
     
     var todoListModel: TodoListModel {
-        return define(init: TodoListModel()) { model in
-            model.container = IosContainer<TodoState, TodoAction>(schedulers: self.schedulersAssembly.schedulers) { state in
-                print(state)
-                model.isLoading = state.isLoading
-                model.error = state.error
-                model.tasks = state.todoList.map {
-                    TaskPresentable(
-                        id: $0.id,
-                        title: $0.title,
-                        description: $0.component3(),
-                        status: $0.status
-                    )
-                }
-                model.showArchive = state.showArchive
-            }
-            return model
+        return define(scope: .weakSingleton, init: TodoListModel()) {
+            print("Inject TodoListModel")
+            $0.container = TodoListFactory.create(schedulers: self.schedulersAssembly.schedulers, model: $0)
+            return $0
         }
     }
 }

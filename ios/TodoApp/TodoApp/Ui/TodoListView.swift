@@ -36,6 +36,7 @@ struct TodoListView: View {
     @ObservedObject var model: TodoListModel
     
     private let createTaskAssembly = CreateTaskAssembly.instance()
+    private let todoListAssembly = TodoListAssembly.instance()
     
     var body: some View {
         ZStack {
@@ -85,7 +86,7 @@ struct TodoListView: View {
                 label: { Text("Refresh") }
             )
         ).onAppear() {
-            self.model.onAppear(store: TodoListAssembly.instance().todoListStore)
+            self.model.onAppear(store: self.todoListAssembly.todoListStore)
         }.onDisappear() {
             self.model.onDisappear()
         }

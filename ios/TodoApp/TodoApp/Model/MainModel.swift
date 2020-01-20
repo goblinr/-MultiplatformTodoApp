@@ -27,3 +27,13 @@ final class MainModel : ObservableObject {
         container?.onDisappear()
     }
 }
+
+final class MainContainerFactory {
+    
+    static func create(schedulers: Schedulers, model: MainModel) -> IosContainer<MainState, MainAction> {
+        return IosContainer<MainState, MainAction>(schedulers: schedulers) { state in
+            print(state)
+            model.state = state
+        }
+    }
+}
