@@ -8,16 +8,15 @@
 
 import SwiftUI
 import Interaction
+import EasyDi
 
 struct CreateTaskView: View {
     
-    @ObservedObject var model: CreateTaskModel
-    var mainStore: Store<MainState, MainAction>
+    @ObservedObject var model: CreateTaskViewModel
+    var context: DIContext
     
     @SwiftUI.State private var title = ""
     @SwiftUI.State private var description = ""
-    
-    private let createTaskAssembly = CreateTaskAssembly.instance()
     
     var body: some View {
         VStack {
@@ -69,12 +68,10 @@ struct CreateTaskView: View {
             }
     }.navigationBarTitle(Screen.createTask.description()).navigationBarBackButtonHidden(true)
         .navigationBarItems(leading: Button(
-            action: { self.mainStore.acceptAction(
-                action: MainAction.NavigateBack()
-            ) },
+            action: { self.model.navigateBack() },
             label: { Text("< Back") }
         )).onAppear() {
-            self.model.onAppear(store: self.createTaskAssembly.createTaskStore)
+            self.model.onAppear(store: CreateTaskAssembly.instance(from: self.context).createTaskStore)
         }.onDisappear() {
             self.model.onDisappear()
         }
@@ -84,32 +81,32 @@ struct CreateTaskView: View {
 #if DEBUG
 struct CreateTaskView_Previews: PreviewProvider {
     
-    static var defaultState: CreateTaskModel {
+    static var defaultState: CreateTaskViewModel {
         get {
-            let model = CreateTaskModel()
+            let model = CreateTaskViewModel()
             return model
         }
     }
     
-    static var loadingState: CreateTaskModel {
+    static var loadingState: CreateTaskViewModel {
         get {
-            let model = CreateTaskModel()
+            let model = CreateTaskViewModel()
             model.isLoading = true
             return model
         }
     }
     
-    static var errorState: CreateTaskModel {
+    static var errorState: CreateTaskViewModel {
         get {
-            let model = CreateTaskModel()
+            let model = CreateTaskViewModel()
             model.error = "Error"
             return model
         }
     }
     
-    static var resultState: CreateTaskModel {
+    static var resultState: CreateTaskViewModel {
         get {
-            let model = CreateTaskModel()
+            let model = CreateTaskViewModel()
             model.result = Task(
                 id: "id",
                 title: "title",
@@ -124,22 +121,22 @@ struct CreateTaskView_Previews: PreviewProvider {
         Group {
             CreateTaskView(
                 model: defaultState,
-                mainStore: MainAssemly.instance().mainStore
+                context: DIContext()
             ).previewDisplayName("Default")
             
             CreateTaskView(
                 model: loadingState,
-                mainStore: MainAssemly.instance().mainStore
+                context: DIContext()
             ).previewDisplayName("Loading")
             
             CreateTaskView(
                 model: errorState,
-                mainStore: MainAssemly.instance().mainStore
+                context: DIContext()
             ).previewDisplayName("Error")
             
             CreateTaskView(
                 model: resultState,
-                mainStore: MainAssemly.instance().mainStore
+                context: DIContext()
             ).previewDisplayName("Result")
         }
     }

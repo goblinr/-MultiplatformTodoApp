@@ -9,14 +9,14 @@
 import SwiftUI
 import Interaction
 
-final class TodoListModel : ObservableObject {
+final class TodoListViewModel : ObservableObject {
     
     var container: IosContainer<TodoState, TodoAction>?
     
-    @Published var isLoading = false
-    @Published var error = ""
-    @Published var tasks: Array<TaskPresentable> = []
-    @Published var showArchive = false
+    var isLoading = false
+    var error = ""
+    var tasks: Array<TaskPresentable> = []
+    var showArchive = false
     
     func acceptAction(action: TodoAction) {
         container?.acceptAction(action: action)
@@ -33,7 +33,7 @@ final class TodoListModel : ObservableObject {
 
 final class TodoListFactory {
     
-    static func create(schedulers: Schedulers, model: TodoListModel) -> IosContainer<TodoState, TodoAction> {
+    static func create(schedulers: Schedulers, model: TodoListViewModel) -> IosContainer<TodoState, TodoAction> {
         return IosContainer<TodoState, TodoAction>(schedulers: schedulers) { state in
             print(state)
             model.isLoading = state.isLoading
@@ -47,6 +47,7 @@ final class TodoListFactory {
                 )
             }
             model.showArchive = state.showArchive
+            model.objectWillChange.send()
         }
     }
 }

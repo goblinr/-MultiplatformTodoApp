@@ -8,9 +8,7 @@
 
 import SwiftUI
 import Interaction
-#if DEBUG
 import EasyDi
-#endif
 
 struct ProgressBar : View {
     @SwiftUI.State private var spinCircle = false
@@ -33,10 +31,8 @@ struct ProgressBar : View {
 struct TodoListView: View {
     
     @ObservedObject var navigator: Navigator
-    @ObservedObject var model: TodoListModel
-    
-    private let createTaskAssembly = CreateTaskAssembly.instance()
-    private let todoListAssembly = TodoListAssembly.instance()
+    @ObservedObject var model: TodoListViewModel
+    var context: DIContext
     
     var body: some View {
         ZStack {
@@ -59,7 +55,7 @@ struct TodoListView: View {
             }
             
             NavigationLink(
-                destination: createTaskAssembly.view,
+                destination: CreateTaskAssembly.instance(from: context).view,
                 tag: Screen.createTask,
                 selection: $navigator.screen
             ) {
@@ -86,7 +82,7 @@ struct TodoListView: View {
                 label: { Text("Refresh") }
             )
         ).onAppear() {
-            self.model.onAppear(store: self.todoListAssembly.todoListStore)
+            self.model.onAppear(store: TodoListAssembly.instance(from: self.context).todoListStore)
         }.onDisappear() {
             self.model.onDisappear()
         }
@@ -97,9 +93,9 @@ struct TodoListView: View {
 
 struct TodoListView_Previews: PreviewProvider {
     
-    static var modelLoaded: TodoListModel {
+    static var modelLoaded: TodoListViewModel {
         get {
-            let instance = TodoListModel()
+            let instance = TodoListViewModel()
             instance.isLoading = false
             instance.tasks = [
                 TaskPresentable(id: "1", title: "One", description: "First task", status: TaskStatus.pending),
@@ -111,9 +107,9 @@ struct TodoListView_Previews: PreviewProvider {
         }
     }
     
-    static var modelLoading: TodoListModel {
+    static var modelLoading: TodoListViewModel {
         get {
-            let instance = TodoListModel()
+            let instance = TodoListViewModel()
             instance.isLoading = true
             instance.tasks = []
             instance.error = ""
@@ -122,9 +118,9 @@ struct TodoListView_Previews: PreviewProvider {
         }
     }
     
-    static var modelError: TodoListModel {
+    static var modelError: TodoListViewModel {
         get {
-            let instance = TodoListModel()
+            let instance = TodoListViewModel()
             instance.isLoading = false
             instance.tasks = []
             instance.error = "Error"
@@ -137,31 +133,37 @@ struct TodoListView_Previews: PreviewProvider {
         Group {
             TodoListView(
                 navigator: Navigator(),
-                model: modelLoaded
-                ).previewDisplayName("Loaded")
+                model: modelLoaded,
+                context: DIContext()
+            ).previewDisplayName("Loaded")
             TodoListView(
                 navigator: Navigator(),
-                model: modelLoaded
+                model: modelLoaded,
+                context: DIContext()
             ).previewDisplayName("Loaded Dark")
             .environment(\.colorScheme, .dark)
             
             TodoListView(
                 navigator: Navigator(),
-                model: modelLoading
+                model: modelLoading,
+                context: DIContext()
             ).previewDisplayName("Loading")
             TodoListView(
                 navigator: Navigator(),
-                model: modelLoading
+                model: modelLoading,
+                context: DIContext()
             ).previewDisplayName("Loading Dark")
             .environment(\.colorScheme, .dark)
             
             TodoListView(
                 navigator: Navigator(),
-                model: modelError
+                model: modelError,
+                context: DIContext()
             ).previewDisplayName("Error")
             TodoListView(
                 navigator: Navigator(),
-                model: modelError
+                model: modelError,
+                context: DIContext()
             ).previewDisplayName("Error Dark")
             .environment(\.colorScheme, .dark)
         }

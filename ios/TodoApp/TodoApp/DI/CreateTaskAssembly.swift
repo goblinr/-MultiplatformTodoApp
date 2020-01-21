@@ -26,15 +26,16 @@ class CreateTaskAssembly: Assembly {
         ))
     }
     
-    var createTaskModel: CreateTaskModel {
-        return define(scope: .weakSingleton, init: CreateTaskModel()) {
-            print("Inject CreateTaskModel")
+    var createTaskModel: CreateTaskViewModel {
+        return define(scope: .weakSingleton, init: CreateTaskViewModel()) {
+            print("Inject CreateTaskViewModel")
             $0.container = CreateTaskFactory.create(schedulers: self.schedulersAssembly.schedulers, model: $0)
+            $0.mainStore = self.mainAssembly.mainStore
             return $0
         }
     }
     
     var view: CreateTaskView {
-        return define(init: CreateTaskView(model: self.createTaskModel, mainStore: self.mainAssembly.mainStore))
+        return define(init: CreateTaskView(model: self.createTaskModel, context: self.context))
     }
 }

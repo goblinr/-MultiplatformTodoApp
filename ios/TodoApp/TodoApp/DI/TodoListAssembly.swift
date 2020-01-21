@@ -17,7 +17,7 @@ class TodoListAssembly: Assembly {
     lazy var navigationAssembly: NavigationAssembly = self.context.assembly()
     
     var todoListStore: Store<TodoState, TodoAction> {
-        return define(init: TodoStore(
+        return define(scope: .weakSingleton, init: TodoStore(
             reducer: TodoReducer(),
             middleware: [
                 TaskLoadMiddleware(taskRepository: self.repositoryAssembly.taskRepository, schedulers: self.schedulersAssembly.schedulers),
@@ -32,9 +32,9 @@ class TodoListAssembly: Assembly {
         ))
     }
     
-    var todoListModel: TodoListModel {
-        return define(scope: .weakSingleton, init: TodoListModel()) {
-            print("Inject TodoListModel")
+    var todoListModel: TodoListViewModel {
+        return define(scope: .weakSingleton, init: TodoListViewModel()) {
+            print("Inject TodoListViewModel")
             $0.container = TodoListFactory.create(schedulers: self.schedulersAssembly.schedulers, model: $0)
             return $0
         }

@@ -28,9 +28,9 @@ class MainAssemly: Assembly {
         ))
     }
     
-    var mainModel: MainModel {
-        return define(scope: .weakSingleton, init: MainModel()) {
-            print("Inject MainModel")
+    var mainModel: MainViewModel {
+        return define(scope: .weakSingleton, init: MainViewModel()) {
+            print("Inject MainViewModel")
             $0.router = self.navigationAssembly.router
             $0.schedulers = self.schedulersAssembly.schedulers
             $0.container = MainContainerFactory.create(schedulers: self.schedulersAssembly.schedulers, model: $0)
@@ -39,6 +39,6 @@ class MainAssemly: Assembly {
     }
     
     var view: ContentView {
-        return define(init: ContentView(navigator:  Navigator(), model: self.mainModel))
+        return define(init: ContentView(navigator:  Navigator(), model: self.mainModel, context: self.context))
     }
 }

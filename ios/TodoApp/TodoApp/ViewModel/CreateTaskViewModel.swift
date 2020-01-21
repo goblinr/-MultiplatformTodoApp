@@ -9,15 +9,16 @@
 import SwiftUI
 import Interaction
 
-final class CreateTaskModel : ObservableObject {
+final class CreateTaskViewModel : ObservableObject {
     
     var container: IosContainer<CreateState, CreateAction>?
+    var mainStore: Store<MainState, MainAction>?
     
-    @Published var isLoading = false
-    @Published var error = ""
-    @Published var title = ""
-    @Published var description = ""
-    @Published var result: Task? = nil
+    var isLoading = false
+    var error = ""
+    var title = ""
+    var description = ""
+    var result: Task? = nil
     
     func acceptAction(action: CreateAction) {
         container?.acceptAction(action: action)
@@ -30,11 +31,15 @@ final class CreateTaskModel : ObservableObject {
     func onDisappear() {
         container?.onDisappear()
     }
+    
+    func navigateBack() {
+        mainStore?.acceptAction(action: MainAction.NavigateBack())
+    }
 }
 
 final class CreateTaskFactory {
     
-    static func create(schedulers: Schedulers, model: CreateTaskModel) -> IosContainer<CreateState, CreateAction> {
+    static func create(schedulers: Schedulers, model: CreateTaskViewModel) -> IosContainer<CreateState, CreateAction> {
         return IosContainer<CreateState, CreateAction>(schedulers: schedulers) { state in
             print(state)
             model.isLoading = state.isLoading
@@ -42,6 +47,7 @@ final class CreateTaskFactory {
             model.title = state.title
             model.description = state.component4()
             model.result = state.result
+            model.objectWillChange.send()
         }
     }
 }

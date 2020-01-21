@@ -8,20 +8,23 @@
 
 import SwiftUI
 import Interaction
+import EasyDi
 
 struct ContentView: View {
     
     @ObservedObject var navigator: Navigator
-    @ObservedObject var model: MainModel
-    
-    private let todoListAssembly = TodoListAssembly.instance()
-    private let mainAssembly = MainAssemly.instance()
+    @ObservedObject var model: MainViewModel
+    var context: DIContext
     
     var body: some View {
         NavigationView {
             VStack {
                 NavigationLink(
-                    destination: TodoListView(navigator: self.navigator.self, model: todoListAssembly.todoListModel),
+                    destination: TodoListView(
+                        navigator: self.navigator.self,
+                        model: TodoListAssembly.instance(from: context).todoListModel,
+                        context: self.context
+                    ),
                     tag: Screen.todoList,
                     selection: $navigator.screen
                 ) {
@@ -29,7 +32,10 @@ struct ContentView: View {
                 }.hidden()
             }
         }.onAppear() {
-            self.model.onAppear(navigator: self.navigator.self, store: self.mainAssembly.mainStore)
+            self.model.onAppear(
+                navigator: self.navigator.self,
+                store: MainAssemly.instance(from: self.context).mainStore
+            )
         }.onDisappear() {
             self.model.onDisappear()
         }
@@ -39,25 +45,33 @@ struct ContentView: View {
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
     
-    static let defaultState = MainModel()
+    static let defaultState = MainViewModel()
+    static var context: DIContext {
+        let context = DIContext()
+        RepositoryAssembly.instance(from: context)
+            .addSubstitution(for: "taskRepository") { () -> TaskRepository in
+                return MockTaskRepository()
+            }
+        
+        return context
+    }
     static var defaultNavigation: Navigator {
-        get {
-            let nav = Navigator()
-            nav.screen = Screen.todoList
-            return nav
-        }
+        let nav = Navigator()
+        nav.screen = Screen.todoList
+        return nav
     }
     
     static var previews: some View {
         Group {
             ContentView(
                 navigator: defaultNavigation,
-                model: defaultState
+                model: defaultState,
+                context: context
             )
-            
             ContentView(
                 navigator: defaultNavigation,
-                model: defaultState
+                model: defaultState,
+                context: context
             ).environment(\.colorScheme, .dark)
         }
     }

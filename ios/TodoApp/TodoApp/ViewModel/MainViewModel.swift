@@ -9,13 +9,13 @@
 import SwiftUI
 import Interaction
 
-final class MainModel : ObservableObject {
+final class MainViewModel : ObservableObject {
 
     var schedulers: Schedulers?
     var router: SwiftRouter?
     var container: IosContainer<MainState, MainAction>?
 
-    @Published public var state: MainState? = nil
+    var state: MainState? = nil
 
     func onAppear(navigator: Navigator, store: Store<MainState, MainAction>) {
         router?.attachNavigator(navigator: navigator)
@@ -30,10 +30,11 @@ final class MainModel : ObservableObject {
 
 final class MainContainerFactory {
     
-    static func create(schedulers: Schedulers, model: MainModel) -> IosContainer<MainState, MainAction> {
+    static func create(schedulers: Schedulers, model: MainViewModel) -> IosContainer<MainState, MainAction> {
         return IosContainer<MainState, MainAction>(schedulers: schedulers) { state in
             print(state)
             model.state = state
+            model.objectWillChange.send()
         }
     }
 }
