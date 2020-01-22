@@ -112,20 +112,26 @@ final class MockTaskRepository : AbstractTaskRepository {
     }
     
     override func blockingSwitchTask(id: String, success: @escaping () -> Void, error: @escaping (KotlinThrowable) -> Void) {
-        Thread.sleep(forTimeInterval: 2)
-        success()
+        error(KotlinThrowable(message: "Error"))
     }
     
     override func blockingArchiveTask(success: @escaping () -> Void, error: @escaping (KotlinThrowable) -> Void) {
-        Thread.sleep(forTimeInterval: 2)
-        success()
+        error(KotlinThrowable(message: "Error"))
     }
     
     override func blockingUnarchiveTask(success: @escaping () -> Void, error: @escaping (KotlinThrowable) -> Void) {
-        
     }
     
     override func blockingCreateTask(title: String, description: String, success: @escaping (Task) -> Void, error: @escaping (KotlinThrowable) -> Void) {
+        Thread.sleep(forTimeInterval: 2)
+        success(
+            FreezeKt.createTask(
+                id: "id",
+                title: title,
+                description: description,
+                status: TaskStatus.pending.description()
+            )
+        )
     }
 }
 #endif

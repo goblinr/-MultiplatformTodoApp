@@ -19,17 +19,19 @@ struct ContentView: View {
     var body: some View {
         NavigationView {
             VStack {
-                NavigationLink(
-                    destination: TodoListView(
-                        navigator: self.navigator.self,
+                if model.screen == Screen.todoList {
+                    TodoListView(
                         model: TodoListAssembly.instance(from: context).todoListModel,
-                        context: self.context
-                    ),
-                    tag: Screen.todoList,
-                    selection: $navigator.screen
-                ) {
-                    EmptyView()
-                }.hidden()
+                        context: context,
+                        inputData: navigator.lastData()
+                    )
+                } else if model.screen == Screen.createTask {
+                    CreateTaskView(
+                        model: CreateTaskAssembly.instance(from: context).createTaskModel,
+                        context: context,
+                        inputData: navigator.lastData()
+                    )
+                }
             }
         }.onAppear() {
             self.model.onAppear(
@@ -44,8 +46,6 @@ struct ContentView: View {
 
 #if DEBUG
 struct ContentView_Previews: PreviewProvider {
-    
-    static let defaultState = MainViewModel()
     static var context: DIContext {
         let context = DIContext()
         RepositoryAssembly.instance(from: context)
@@ -55,24 +55,28 @@ struct ContentView_Previews: PreviewProvider {
         
         return context
     }
-    static var defaultNavigation: Navigator {
-        let nav = Navigator()
-        nav.screen = Screen.todoList
-        return nav
+    static var listState: MainViewModel {
+        let model = MainViewModel()
+        model.screen = Screen.todoList
+        model.backstack = []
+        model.container = MainContainerFactory.create(schedulers: IosSchedulers(), model: model)
+        return model
     }
     
     static var previews: some View {
         Group {
             ContentView(
-                navigator: defaultNavigation,
-                model: defaultState,
+                navigator: Navigator(),
+                model: listState,
                 context: context
-            )
+            ).previewDisplayName("Light")
+            
             ContentView(
-                navigator: defaultNavigation,
-                model: defaultState,
+                navigator: Navigator(),
+                model: listState,
                 context: context
             ).environment(\.colorScheme, .dark)
+            .previewDisplayName("Dark")
         }
     }
 }

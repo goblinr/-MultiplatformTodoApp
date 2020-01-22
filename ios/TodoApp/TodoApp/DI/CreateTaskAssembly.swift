@@ -34,8 +34,4 @@ class CreateTaskAssembly: Assembly {
             return $0
         }
     }
-    
-    var view: CreateTaskView {
-        return define(init: CreateTaskView(model: self.createTaskModel, context: self.context))
-    }
 }

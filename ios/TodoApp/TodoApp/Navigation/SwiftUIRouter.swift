@@ -17,33 +17,34 @@ enum Command {
 
 final class Navigator : ObservableObject {
     
-    @Environment(\.presentationMode) private var presentation
-    public var screen: Screen? = nil
+    private var data: Array<Any?> = []
     
-    func executeCommands(commands: Array<Command>) {
+    public func lastData() -> Any? {
+        return data.last ?? nil
+    }
+    
+    internal func executeCommands(commands: Array<Command>) {
         commands.forEach() { command in
             execute(command)
         }
     }
     
-    func execute(_ command: Command) {
+    internal func execute(_ command: Command) {
         switch command {
         case .back:
-            if presentation.wrappedValue.isPresented {
-                presentation.wrappedValue.dismiss()
+            if !data.isEmpty {
+                data.removeLast()
             }
-            self.screen = nil
-            objectWillChange.send()
         case .forward(let route):
-            self.screen = route.screen
-            objectWillChange.send()
+            data.append(route.data)
         case .replace(let route):
-            if presentation.wrappedValue.isPresented {
-                presentation.wrappedValue.dismiss()
+            if (!data.isEmpty) {
+                data[data.count - 1] = route.data
+            } else {
+                data.append(route.data)
             }
-            self.screen = route.screen
-            objectWillChange.send()
         }
+        objectWillChange.send()
     }
 }
 

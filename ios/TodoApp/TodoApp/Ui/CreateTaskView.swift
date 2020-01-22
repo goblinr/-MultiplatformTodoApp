@@ -14,6 +14,7 @@ struct CreateTaskView: View {
     
     @ObservedObject var model: CreateTaskViewModel
     var context: DIContext
+    var inputData: Any?
     
     @SwiftUI.State private var title = ""
     @SwiftUI.State private var description = ""
@@ -66,11 +67,12 @@ struct CreateTaskView: View {
                     ).padding()
                     .disabled(model.isLoading)
             }
-    }.navigationBarTitle(Screen.createTask.description()).navigationBarBackButtonHidden(true)
-        .navigationBarItems(leading: Button(
-            action: { self.model.navigateBack() },
-            label: { Text("< Back") }
-        )).onAppear() {
+    }.navigationBarTitle(Screen.createTask.description())
+            .navigationBarItems(leading: Button(
+                action: { self.model.navigateBack() },
+                label: { Text("< Back") }
+            ), trailing: EmptyView()
+        ).onAppear() {
             self.model.onAppear(store: CreateTaskAssembly.instance(from: self.context).createTaskStore)
         }.onDisappear() {
             self.model.onDisappear()
@@ -81,7 +83,7 @@ struct CreateTaskView: View {
 #if DEBUG
 struct CreateTaskView_Previews: PreviewProvider {
     
-    static var defaultState: CreateTaskViewModel {
+    static var listState: CreateTaskViewModel {
         get {
             let model = CreateTaskViewModel()
             return model
@@ -120,23 +122,27 @@ struct CreateTaskView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             CreateTaskView(
-                model: defaultState,
-                context: DIContext()
+                model: listState,
+                context: DIContext(),
+                inputData: nil
             ).previewDisplayName("Default")
             
             CreateTaskView(
                 model: loadingState,
-                context: DIContext()
+                context: DIContext(),
+                inputData: nil
             ).previewDisplayName("Loading")
             
             CreateTaskView(
                 model: errorState,
-                context: DIContext()
+                context: DIContext(),
+                inputData: nil
             ).previewDisplayName("Error")
             
             CreateTaskView(
                 model: resultState,
-                context: DIContext()
+                context: DIContext(),
+                inputData: nil
             ).previewDisplayName("Result")
         }
     }

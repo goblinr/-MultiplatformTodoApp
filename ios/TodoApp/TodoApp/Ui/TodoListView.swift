@@ -30,9 +30,9 @@ struct ProgressBar : View {
 
 struct TodoListView: View {
     
-    @ObservedObject var navigator: Navigator
     @ObservedObject var model: TodoListViewModel
     var context: DIContext
+    var inputData: Any?
     
     var body: some View {
         ZStack {
@@ -53,19 +53,10 @@ struct TodoListView: View {
             if model.isLoading {
                 ProgressBar()
             }
-            
-            NavigationLink(
-                destination: CreateTaskAssembly.instance(from: context).view,
-                tag: Screen.createTask,
-                selection: $navigator.screen
-            ) {
-                EmptyView()
-            }.hidden()
-            
         }.navigationBarTitle(Screen.todoList.description())
-        .navigationBarBackButtonHidden(true)
         .navigationBarItems(
-            leading: HStack {
+            leading: EmptyView(),
+            trailing: HStack {
                 Button(
                     action: { self.model.acceptAction(action: TodoAction.CreateTask()) },
                     label: { Text("Create") }
@@ -76,11 +67,11 @@ struct TodoListView: View {
                         label: { Text("Archive") }
                     )
                 }
-            },
-            trailing: Button(
-                action: { self.model.acceptAction(action: TodoAction.Load()) },
-                label: { Text("Refresh") }
-            )
+                Button(
+                    action: { self.model.acceptAction(action: TodoAction.Load()) },
+                    label: { Text("Refresh") }
+                )
+            }
         ).onAppear() {
             self.model.onAppear(store: TodoListAssembly.instance(from: self.context).todoListStore)
         }.onDisappear() {
@@ -129,42 +120,68 @@ struct TodoListView_Previews: PreviewProvider {
         }
     }
     
+    static var modelWithContentError: TodoListViewModel {
+        get {
+            let instance = TodoListViewModel()
+            instance.isLoading = false
+            instance.tasks = [
+                TaskPresentable(id: "1", title: "One", description: "First task", status: TaskStatus.pending),
+                TaskPresentable(id: "2", title: "Two", description: "Second task", status: TaskStatus.done)
+            ]
+            instance.error = "Error"
+            instance.showArchive = false
+            return instance
+        }
+    }
+    
     static var previews: some View {
         Group {
             TodoListView(
-                navigator: Navigator(),
                 model: modelLoaded,
-                context: DIContext()
+                context: DIContext(),
+                inputData: nil
             ).previewDisplayName("Loaded")
             TodoListView(
-                navigator: Navigator(),
                 model: modelLoaded,
-                context: DIContext()
+                context: DIContext(),
+                inputData: nil
             ).previewDisplayName("Loaded Dark")
             .environment(\.colorScheme, .dark)
             
             TodoListView(
-                navigator: Navigator(),
                 model: modelLoading,
-                context: DIContext()
+                context: DIContext(),
+                inputData: nil
             ).previewDisplayName("Loading")
             TodoListView(
-                navigator: Navigator(),
                 model: modelLoading,
-                context: DIContext()
+                context: DIContext(),
+                inputData: nil
             ).previewDisplayName("Loading Dark")
             .environment(\.colorScheme, .dark)
             
             TodoListView(
-                navigator: Navigator(),
                 model: modelError,
-                context: DIContext()
+                context: DIContext(),
+                inputData: nil
             ).previewDisplayName("Error")
             TodoListView(
-                navigator: Navigator(),
                 model: modelError,
-                context: DIContext()
+                context: DIContext(),
+                inputData: nil
             ).previewDisplayName("Error Dark")
+            .environment(\.colorScheme, .dark)
+            
+            TodoListView(
+                model: modelWithContentError,
+                context: DIContext(),
+                inputData: nil
+            ).previewDisplayName("Error with content")
+            TodoListView(
+                model: modelWithContentError,
+                context: DIContext(),
+                inputData: nil
+            ).previewDisplayName("Error with content Dark")
             .environment(\.colorScheme, .dark)
         }
     }
