@@ -119,31 +119,32 @@ struct CreateTaskView_Previews: PreviewProvider {
         }
     }
     
+    static var data: Array<(key: String, value: CreateTaskViewModel)> {
+        return [
+            (key: "Default", value: listState),
+            (key: "Loading", value: loadingState),
+            (key: "Error", value: errorState),
+            (key: "Result", value: resultState)
+        ]
+    }
+    
     static var previews: some View {
         Group {
-            CreateTaskView(
-                model: listState,
-                context: DIContext(),
-                inputData: nil
-            ).previewDisplayName("Default")
-            
-            CreateTaskView(
-                model: loadingState,
-                context: DIContext(),
-                inputData: nil
-            ).previewDisplayName("Loading")
-            
-            CreateTaskView(
-                model: errorState,
-                context: DIContext(),
-                inputData: nil
-            ).previewDisplayName("Error")
-            
-            CreateTaskView(
-                model: resultState,
-                context: DIContext(),
-                inputData: nil
-            ).previewDisplayName("Result")
+            ForEach(data, id: \.key) { entry in
+                Group {
+                    CreateTaskView(
+                        model: entry.value,
+                        context: DIContext(),
+                        inputData: nil
+                    ).previewDisplayName(entry.key)
+                    CreateTaskView(
+                        model: entry.value,
+                        context: DIContext(),
+                        inputData: nil
+                    ).previewDisplayName("\(entry.key) Dark")
+                    .darkModeFix()
+                }
+            }
         }
     }
 }

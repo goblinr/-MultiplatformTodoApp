@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1B807E53653228887E53BC2D /* Pods_TodoApp_TodoAppUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F93E63E308EE799D0CB684C8 /* Pods_TodoApp_TodoAppUITests.framework */; };
+		302FFE9023D9E73A0016454B /* DarkModeFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302FFE8F23D9E73A0016454B /* DarkModeFix.swift */; };
 		3057B1B923CDE21600B24E51 /* CreateTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057B1B823CDE21600B24E51 /* CreateTaskView.swift */; };
 		3057B1BB23CDE77100B24E51 /* CreateTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057B1BA23CDE77100B24E51 /* CreateTaskViewModel.swift */; };
 		308ADB6A23D46398007F1595 /* MainAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308ADB6923D46398007F1595 /* MainAssembly.swift */; };
@@ -70,6 +71,7 @@
 /* Begin PBXFileReference section */
 		12CDC01408382EB94B3E2F86 /* Pods-TodoApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoApp.release.xcconfig"; path = "Target Support Files/Pods-TodoApp/Pods-TodoApp.release.xcconfig"; sourceTree = "<group>"; };
 		2EF5EF7F977012CC844BC055 /* Pods-TodoAppTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoAppTests.release.xcconfig"; path = "Target Support Files/Pods-TodoAppTests/Pods-TodoAppTests.release.xcconfig"; sourceTree = "<group>"; };
+		302FFE8F23D9E73A0016454B /* DarkModeFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeFix.swift; sourceTree = "<group>"; };
 		3057B1B823CDE21600B24E51 /* CreateTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskView.swift; sourceTree = "<group>"; };
 		3057B1BA23CDE77100B24E51 /* CreateTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewModel.swift; sourceTree = "<group>"; };
 		308ADB6923D46398007F1595 /* MainAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAssembly.swift; sourceTree = "<group>"; };
@@ -159,6 +161,7 @@
 				30DED83F23C7578400CEB4AC /* TaskView.swift */,
 				30B324B523CA555F0090D316 /* TodoListView.swift */,
 				3057B1B823CDE21600B24E51 /* CreateTaskView.swift */,
+				302FFE8F23D9E73A0016454B /* DarkModeFix.swift */,
 			);
 			path = Ui;
 			sourceTree = "<group>";
@@ -556,6 +559,7 @@
 				3057B1B923CDE21600B24E51 /* CreateTaskView.swift in Sources */,
 				30B324AF23CA1A060090D316 /* SwiftUIRouter.swift in Sources */,
 				30DED84023C7578400CEB4AC /* TaskView.swift in Sources */,
+				302FFE9023D9E73A0016454B /* DarkModeFix.swift in Sources */,
 				308ADB6A23D46398007F1595 /* MainAssembly.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

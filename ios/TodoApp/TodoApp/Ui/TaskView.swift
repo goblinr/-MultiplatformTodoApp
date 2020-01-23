@@ -36,27 +36,39 @@ struct TaskView: View {
 }
 
 struct TaskView_Previews: PreviewProvider {
+    static var data: Array<(key: String, value: TaskPresentable)> {
+        return [
+            (key: "Pending", value: TaskPresentable(
+                id: "id",
+                title: "title",
+                description: "description",
+                status: TaskStatus.pending
+            )),
+            (key: "Done", value: TaskPresentable(
+                id: "id",
+                title: "title",
+                description: "description",
+                status: TaskStatus.done
+            ))
+        ]
+    }
     static var previews: some View {
         Group {
-            TaskView(
-                task: TaskPresentable(
-                    id: "id",
-                    title: "title",
-                    description: "description",
-                    status: TaskStatus.pending
-                )
-                ).previewLayout(PreviewLayout.fixed(width: CGFloat(300), height: CGFloat(80)))
-                .previewDisplayName("Pending")
-            
-            TaskView(
-                task: TaskPresentable(
-                    id: "id",
-                    title: "title",
-                    description: "description",
-                    status: TaskStatus.done
-                )
-            ).previewLayout(PreviewLayout.fixed(width: CGFloat(300), height: CGFloat(80)))
-            .previewDisplayName("Done")
+            ForEach(data, id: \.key) { entry in
+                Group {
+                    TaskView(
+                        task: entry.value
+                    ).previewLayout(PreviewLayout.fixed(width: CGFloat(300), height: CGFloat(80)))
+                        .previewDisplayName(entry.key)
+                    
+                    TaskView(
+                        task: entry.value
+                    )
+                    .darkModeFix()
+                        .previewLayout(PreviewLayout.fixed(width: CGFloat(300), height: CGFloat(80)))
+                        .previewDisplayName("\(entry.key) Dark")
+                }
+            }
         }
     }
 }

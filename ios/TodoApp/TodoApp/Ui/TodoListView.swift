@@ -134,55 +134,32 @@ struct TodoListView_Previews: PreviewProvider {
         }
     }
     
+    static var data: Array<(key: String, value: TodoListViewModel)> {
+        return [
+            (key: "Loaded", value: modelLoaded),
+            (key: "Loading", value: modelLoading),
+            (key: "Error", value: modelError),
+            (key: "Error with content", value: modelWithContentError)
+        ]
+    }
+    
     static var previews: some View {
         Group {
-            TodoListView(
-                model: modelLoaded,
-                context: DIContext(),
-                inputData: nil
-            ).previewDisplayName("Loaded")
-            TodoListView(
-                model: modelLoaded,
-                context: DIContext(),
-                inputData: nil
-            ).previewDisplayName("Loaded Dark")
-            .environment(\.colorScheme, .dark)
-            
-            TodoListView(
-                model: modelLoading,
-                context: DIContext(),
-                inputData: nil
-            ).previewDisplayName("Loading")
-            TodoListView(
-                model: modelLoading,
-                context: DIContext(),
-                inputData: nil
-            ).previewDisplayName("Loading Dark")
-            .environment(\.colorScheme, .dark)
-            
-            TodoListView(
-                model: modelError,
-                context: DIContext(),
-                inputData: nil
-            ).previewDisplayName("Error")
-            TodoListView(
-                model: modelError,
-                context: DIContext(),
-                inputData: nil
-            ).previewDisplayName("Error Dark")
-            .environment(\.colorScheme, .dark)
-            
-            TodoListView(
-                model: modelWithContentError,
-                context: DIContext(),
-                inputData: nil
-            ).previewDisplayName("Error with content")
-            TodoListView(
-                model: modelWithContentError,
-                context: DIContext(),
-                inputData: nil
-            ).previewDisplayName("Error with content Dark")
-            .environment(\.colorScheme, .dark)
+            ForEach(data, id: \.key) { entry in
+                Group {
+                    TodoListView(
+                        model: entry.value,
+                        context: DIContext(),
+                        inputData: nil
+                    ).previewDisplayName(entry.key)
+                    TodoListView(
+                        model: entry.value,
+                        context: DIContext(),
+                        inputData: nil
+                    ).previewDisplayName("\(entry.key) Dark")
+                    .environment(\.colorScheme, .dark)
+                }
+            }
         }
     }
 }
