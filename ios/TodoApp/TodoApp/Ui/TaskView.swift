@@ -35,6 +35,7 @@ struct TaskView: View {
     }
 }
 
+#if DEBUG
 struct TaskView_Previews: PreviewProvider {
     static var data: Array<(key: String, value: TaskPresentable)> {
         return [
@@ -72,3 +73,4 @@ struct TaskView_Previews: PreviewProvider {
         }
     }
 }
+#endif
