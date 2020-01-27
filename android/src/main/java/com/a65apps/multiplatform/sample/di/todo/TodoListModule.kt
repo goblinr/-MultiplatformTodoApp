@@ -10,6 +10,7 @@ import com.a65apps.multiplatform.interaction.main.MainAction
 import com.a65apps.multiplatform.interaction.main.MainState
 import com.a65apps.multiplatform.interaction.todo.ChangedTaskMiddleware
 import com.a65apps.multiplatform.interaction.todo.CreateTaskMiddleware
+import com.a65apps.multiplatform.interaction.todo.GoToArchiveMiddleware
 import com.a65apps.multiplatform.interaction.todo.TaskArchiveMiddleware
 import com.a65apps.multiplatform.interaction.todo.TaskLoadMiddleware
 import com.a65apps.multiplatform.interaction.todo.TaskSwitchMiddleware
@@ -99,4 +100,12 @@ class TodoListModule {
         taskRepository: TaskRepository
     ): Middleware<TodoAction, TodoState> =
         ChangedTaskMiddleware(taskRepository)
+
+    @TodoListScope
+    @IntoSet
+    @Provides
+    fun providesGoToArchiveTaskMiddleware(
+        mainStore: Store<MainState, MainAction>
+    ): Middleware<TodoAction, TodoState> =
+        GoToArchiveMiddleware(mainStore)
 }

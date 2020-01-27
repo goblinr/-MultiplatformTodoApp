@@ -4,4 +4,5 @@
     <string name="description">Description</string>
     <string name="create">Create</string>
     <string name="creating">Creating…</string>
+    <string name="archive">archive</string>
 </resources>

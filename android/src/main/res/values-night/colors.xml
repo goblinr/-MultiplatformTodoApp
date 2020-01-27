@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="item_background_swipe">@android:color/white</color>
+    <color name="item_background">#323232</color>
+    <color name="icon_color">#323232</color>
+</resources>

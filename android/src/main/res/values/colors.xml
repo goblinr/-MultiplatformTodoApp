@@ -1,4 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="colorError">#F00</color>
+    <color name="item_background_swipe">#323232</color>
+    <color name="item_background">@android:color/white</color>
+    <color name="icon_color">@android:color/white</color>
 </resources>

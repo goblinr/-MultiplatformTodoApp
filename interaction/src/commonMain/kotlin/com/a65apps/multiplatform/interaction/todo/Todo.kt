@@ -13,6 +13,7 @@ class TodoReducer : Reducer<TodoState, TodoAction> {
 
     override fun reduce(state: TodoState, action: TodoAction): TodoState = when (action) {
         TodoAction.Idle,
+        TodoAction.GoToArchive,
         TodoAction.CreateTask -> state
         is TodoAction.Switch,
         TodoAction.Archive,

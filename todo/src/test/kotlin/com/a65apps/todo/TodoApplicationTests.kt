@@ -116,4 +116,39 @@ class TodoApplicationTests {
         assertTrue(tasks.contains(TaskEntity("2", "title2", "description2", TaskStatus.ARCHIVED, Date(2))))
         assertTrue(tasks.contains(TaskEntity("3", "title3", "description3", TaskStatus.ARCHIVED, Date(3))))
     }
+
+    @Test
+    fun `it should return all tasks with status ARCHIVED sorted by date DESC`() {
+        // given
+        repository.save(TaskEntity("1", "title1", "description1", TaskStatus.ARCHIVED, Date(1)))
+        repository.save(TaskEntity("2", "title2", "description2", TaskStatus.ARCHIVED, Date(2)))
+        repository.save(TaskEntity("3", "title3", "description3", TaskStatus.DONE, Date(3)))
+
+        // when
+        mvc.perform(get("/tasks/archive"))
+            // then
+            .andExpect(status().isOk)
+            .andExpect(
+                content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(jsonPath("$..id", `is`(listOf("2", "1"))))
+            .andExpect(jsonPath("$..title", `is`(listOf("title2", "title1"))))
+            .andExpect(jsonPath("$..description", `is`(listOf("description2", "description1"))))
+            .andExpect(jsonPath("$..status", `is`(listOf("ARCHIVED", "ARCHIVED"))))
+    }
+
+    @Test
+    fun `it should successfully unarchive task`() {
+        // given
+        repository.save(TaskEntity("1", "title1", "description1", TaskStatus.ARCHIVED, Date()))
+
+        // when
+        mvc.perform(patch("/tasks/archive/1"))
+            // then
+            .andExpect(status().isOk)
+            .andExpect(
+                content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON)
+            )
+            .andExpect(jsonPath("$.status", `is`("DONE")))
+    }
 }
