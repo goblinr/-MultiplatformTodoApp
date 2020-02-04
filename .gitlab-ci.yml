@@ -16,6 +16,7 @@ buildDebug:
   stage: build
   script:
     - ./gradlew :android:assembleDebug
+    - cd ./ios/TodoApp
     - fastlane beta
   tags:
     - android
