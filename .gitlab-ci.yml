@@ -16,6 +16,6 @@ buildDebug:
   stage: build
   script:
     - ./gradlew :android:assembleDebug
-    - xcodebuild -workspace ./ios/TodoApp/TodoApp.xcworkspace -scheme TodoApp build
+    - fastlane beta
   tags:
     - android
