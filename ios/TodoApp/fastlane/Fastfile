@@ -20,6 +20,7 @@ platform :ios do
 
   desc "build"
   lane :beta do
+    cocoapods
     match(type: "development", readonly: true)
     gym(
         export_method: "development",
