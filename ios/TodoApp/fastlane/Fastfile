@@ -25,7 +25,8 @@ platform :ios do
     gym(
         export_method: "development",
         configuration: "Debug",
-        skip_archive: true
+        skip_archive: true,
+        skip_codesigning: true
     )
   end
 
