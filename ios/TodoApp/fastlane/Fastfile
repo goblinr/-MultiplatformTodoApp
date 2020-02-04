@@ -20,8 +20,9 @@ platform :ios do
 
   desc "build"
   lane :beta do
-    match(type: "development", readonly: true)
+    match(type: "enterprise", readonly: true)
     gym(
+        export_method: "enterprise",
         configuration: "Debug",
         skip_archive: true
     )
