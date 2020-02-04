@@ -34,7 +34,7 @@ class NetworkTaskRepository @Inject constructor(
     override fun archiveTasks(): Completable =
         api.archiveTasks()
             .doOnComplete { changed.onNext(Unit) }
-            .asReaktive<Unit>()
+            .asReaktive()
 
     override fun unarchiveTask(id: String): Completable {
         TODO("not implemented") // To change body of created functions use File | Settings | File Templates.

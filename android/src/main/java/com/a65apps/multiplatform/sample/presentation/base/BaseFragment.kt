@@ -49,6 +49,7 @@ abstract class BaseFragment<S : State, A : Action, P : Parcelable, VM : BaseView
 
     @CallSuper
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        this
         renderingDisposable = viewModel.state
             .observeOn(schedulers.main)
             .subscribe(isThreadLocal = true) {

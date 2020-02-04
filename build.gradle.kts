@@ -2,7 +2,7 @@
 
 buildscript {
     val kotlinVersion by extra("1.3.61")
-    val reaktiveVersion by extra("1.1.8")
+    val reaktiveVersion by extra("1.1.9")
     val daggerVersion by extra("2.25.2")
 
     repositories {

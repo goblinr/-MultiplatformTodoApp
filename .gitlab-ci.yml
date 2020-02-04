@@ -3,8 +3,15 @@ before_script:
 
 stages:
   - test
+  - build
 
 check:
   stage: test
   script:
     - ./gradlew check
+
+buildDebug:
+  stage: build
+  script:
+    - ./gradlew :android:assembleDebug
+    - xcodebuild -workspace ./ios/TodoApp/TodoApp.xcworkspace -scheme TodoApp build

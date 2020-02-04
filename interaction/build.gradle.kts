@@ -14,12 +14,17 @@ kotlin {
             ::iosArm64
         else
             ::iosX64
+    val reaktiveIos = if (System.getenv("SDK_NAME")?.startsWith("iphoneos") == true)
+            "ios64"
+        else
+            "iossim"
 
     iOSTarget("ios") {
         binaries {
             framework {
                 baseName = "Interaction"
                 export(project(":domain"))
+                export("com.badoo.reaktive:reaktive-$reaktiveIos:$reaktiveVersion")
                 freeCompilerArgs = freeCompilerArgs + "-Xobjc-generics"
             }
         }
@@ -60,6 +65,12 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-test")
                 implementation("org.jetbrains.kotlin:kotlin-test-junit")
                 implementation("com.badoo.reaktive:reaktive-testing-jvm:$reaktiveVersion")
+            }
+        }
+
+        val iosMain by getting {
+            dependencies {
+                api("com.badoo.reaktive:reaktive-$reaktiveIos:$reaktiveVersion")
             }
         }
     }
