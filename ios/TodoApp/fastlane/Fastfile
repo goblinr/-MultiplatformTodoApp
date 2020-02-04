@@ -19,9 +19,11 @@ platform :ios do
 
   desc "build"
   lane :beta do
-    get_certificates           # invokes cert
-    get_provisioning_profile   # invokes sigh
-    build_app
+    match(type: "development", readonly: true)
+    gym(
+        configuration: "Debug",
+        skip_archive: true
+    )
   end
 
 end
