@@ -9,6 +9,8 @@ class IosObserwableWrapper<T>(
     private val inner: Observable<T>
 ) : ObservableWrapper<T>(inner) {
 
-    fun observeOn(scheduler: Scheduler): IosObserwableWrapper<T> =
-        IosObserwableWrapper(inner.observeOn(scheduler))
+    fun observeOn(scheduler: Scheduler): IosObserwableWrapper<T> {
+        inner.observeOn(scheduler)
+        return this
+    }
 }
