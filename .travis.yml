@@ -9,6 +9,7 @@ before_cache:
   - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
   - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
 cache:
+  bundler: true
   directories:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper/
@@ -32,14 +33,13 @@ jobs:
         - ./gradlew :android:assembleDebug
 
     - name: iOS build
-      language: bash
+      language: objective-c
       os: osx
       osx_image: xcode11.3
-      before_install:
-        - brew install fastlane
+      install:
+        - bundle install
       script:
         - ./gradlew :interaction:macosTest
         - ./gradlew packForXcode
         - cd ./ios/TodoApp
-        - bundle update --bundler
         - fastlane beta
