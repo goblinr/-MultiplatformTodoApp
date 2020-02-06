@@ -11,19 +11,19 @@ import com.a65apps.multiplatform.interaction.freeze
 class CreateReducer : Reducer<CreateState, CreateAction> {
 
     override fun reduce(state: CreateState, action: CreateAction): CreateState = when (action) {
-        CreateAction.Idle -> state.freeze()
-        CreateAction.Create -> state.copy(isLoading = true, error = "").freeze()
-        is CreateAction.Error -> state.copy(isLoading = false, error = action.message).freeze()
+        CreateAction.Idle -> state
+        CreateAction.Create -> state.copy(isLoading = true, error = "")
+        is CreateAction.Error -> state.copy(isLoading = false, error = action.message)
         is CreateAction.UpdateField -> when (action.type) {
-            FieldType.TITLE -> state.copy(title = action.value).freeze()
-            FieldType.DESCRIPTION -> state.copy(description = action.value).freeze()
+            FieldType.TITLE -> state.copy(title = action.value)
+            FieldType.DESCRIPTION -> state.copy(description = action.value)
         }
         is CreateAction.CreateResult -> state.copy(
             isLoading = false,
             error = "",
             result = action.task
-        ).freeze()
-    }
+        )
+    }.freeze()
 }
 
 class CreateStateProvider(private val restoredState: CreateState?) : StateProvider<CreateState> {

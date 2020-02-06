@@ -14,7 +14,7 @@
 # update_fastlane
 
 default_platform(:ios)
-xcversion(version: "11.3")
+xcversion(version: ENV["XCODE_VERSION"])
 
 platform :ios do
 

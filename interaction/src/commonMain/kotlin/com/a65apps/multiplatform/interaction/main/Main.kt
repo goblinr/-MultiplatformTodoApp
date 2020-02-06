@@ -15,17 +15,17 @@ class MainReducer : Reducer<MainState, MainAction> {
         is MainAction.NavigateForward -> state.copy(
             screen = action.screen,
             backStack = state.backStack + state.screen
-        ).freeze()
+        )
         is MainAction.NavigateReplace -> state.copy(
             screen = action.screen
-        ).freeze()
+        )
         MainAction.NavigateBack -> state.copy(
             screen = state.backStack.lastOrNull() ?: state.screen,
             backStack = state.backStack.take((state.backStack.size - 1)
                 .takeIf { state.backStack.isNotEmpty() } ?: 0)
-        ).freeze()
-        MainAction.Idle -> state.freeze()
-    }
+        )
+        MainAction.Idle -> state
+    }.freeze()
 }
 
 class MainStateProvider(private val restoredState: MainState?) : StateProvider<MainState> {

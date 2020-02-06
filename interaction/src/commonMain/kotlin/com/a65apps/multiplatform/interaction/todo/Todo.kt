@@ -13,11 +13,11 @@ class TodoReducer : Reducer<TodoState, TodoAction> {
 
     override fun reduce(state: TodoState, action: TodoAction): TodoState = when (action) {
         TodoAction.Idle,
-        TodoAction.CreateTask -> state.freeze()
+        TodoAction.CreateTask -> state
         is TodoAction.Switch,
         TodoAction.Archive,
         is TodoAction.Unarchive,
-        TodoAction.Load -> state.copy(isLoading = true).freeze()
+        TodoAction.Load -> state.copy(isLoading = true)
         is TodoAction.Loaded -> state.copy(
             isLoading = false,
             todoList = action.tasks,
@@ -25,12 +25,12 @@ class TodoReducer : Reducer<TodoState, TodoAction> {
                 result || task.status == TaskStatus.DONE
             },
             error = ""
-        ).freeze()
+        )
         is TodoAction.Error -> state.copy(
             isLoading = false,
             error = action.message
-        ).freeze()
-    }
+        )
+    }.freeze()
 }
 
 class TodoStateProvider(private val restoredState: TodoState?) : StateProvider<TodoState> {
