@@ -1,0 +1,37 @@
+jobs:
+  include:
+    - name: Check android
+      language: android
+      dist: trusty
+      jdk: oraclejdk8
+      script: ./gradlew :android:check
+
+    - name: Check interaction
+      language: java
+      os: osx
+      osx_image: xcode11.2
+      script: ./gradlew :interaction:check
+
+    - name: Check backend
+      language: java
+      dist: trusty
+      jdk: oraclejdk8
+      script: ./gradlew :todo:check
+
+    - name: Android build
+      language: android
+      dist: trusty
+      jdk: oraclejdk8
+      script: ./gradlew :android:assembleDebug
+
+    - name: iOS build
+      language: bash
+      os: osx
+      osx_image: xcode11.2
+      before_install:
+        - brew install fastlane
+      script:
+        - ./gradlew packForXcode
+        - cd ./ios/TodoApp
+        - bundle update --bundler
+        - fastlane beta
