@@ -27,44 +27,9 @@ jobs:
         - ./gradlew ktlintCheck
         - ./gradlew detekt
         - ./gradlew :android:check
-
-    - name: Check iOS interaction
-      language: bash
-      os: osx
-      osx_image: xcode11.3
-      script:
-        - ./gradlew :interaction:macosTest
-
-    - name: Check Android interaction
-      language: android
-      dist: trusty
-      android:
-        components:
-          - build-tools-29.0.2
-          - android-29
-      jdk: oraclejdk8
-      script:
         - ./gradlew :interaction:androidTest
-
-    - name: Check backend
-      language: android
-      dist: trusty
-      jdk: oraclejdk8
-      android:
-        components:
-          - build-tools-29.0.2
-          - android-29
-      script: ./gradlew :todo:check
-
-    - name: Android build
-      language: android
-      dist: trusty
-      jdk: oraclejdk8
-      android:
-        components:
-          - build-tools-29.0.2
-          - android-29
-      script: ./gradlew :android:assembleDebug
+        - ./gradlew :todo:check
+        - ./gradlew :android:assembleDebug
 
     - name: iOS build
       language: bash
@@ -73,6 +38,7 @@ jobs:
       before_install:
         - brew install fastlane
       script:
+        - ./gradlew :interaction:macosTest
         - ./gradlew packForXcode
         - cd ./ios/TodoApp
         - bundle update --bundler
