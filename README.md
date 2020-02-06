@@ -1,5 +1,7 @@
 # Пример использования Kotlin multiplatform для TODO приложения
 
+[![Build Status](https://travis-ci.com/goblinr/-MultiplatformTodoApp.svg?branch=master)](https://travis-ci.com/goblinr/-MultiplatformTodoApp)
+
 Презентация: [Kotlin multiplatform: Android + iOS + Backend в одном моно-репозитории
 ](https://docs.google.com/presentation/d/1h7Yf_tDJLnHDxxzjIiPLja7fI4E5Rz94ltLmwwoKkJ8/edit?usp=sharing)
 
