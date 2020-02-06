@@ -5,11 +5,14 @@
 
 ## Архитектура приложения
 Приложение использует подход Clean Architecture или "слоистой" архитектуры
+
 ![clean](img/clean.png)
 
 #### Entities
 Все части приложения(Android, iOS, Backend) зависят от слоя Entities(Domain) модуль `domain`. 
+
 ![entity](img/entity.png)
+
 В этом кросплатформенном модуле собраны бизнес-сущности приложения
 ```kotlin
 /**
@@ -30,9 +33,13 @@ data class Task(
 
 #### UseCase(Interactors)
 Для Android и iOS общий модуль `interaction`. Backend представлен в виде единого монолитного модуля `todo` в котором есть свой слой UseCase
+
 ![interactors](img/interactors.png)
+
 В модуле `interaction` используется паттерн проектирования MVI
+
 ![MVI](img/mvi.png)
+
 Пример редуктора состояний:
 ```kotlin
 class TodoReducer : Reducer<TodoState, TodoAction> {
@@ -80,7 +87,9 @@ class TaskLoadMiddleware(
 ```
 #### Platform adapters
 Слой адаптеров платформенных компонентов, для каждой платформы свой:
+
 ![platform-adapters](img/platform-adapters.png)
+
 Пример ViewModel для Android:
 ```kotlin
 open class BaseViewModel<S : State, A : Action>(
@@ -214,6 +223,7 @@ class TaskController @Autowired constructor(
 ```
 #### Platform
 ![platform](img/platform.png)
+
 Пример View в Android:
 ```kotlin
  abstract class BaseFragment<S : State, A : Action, P : Parcelable, VM : BaseViewModel<S, A>> :
