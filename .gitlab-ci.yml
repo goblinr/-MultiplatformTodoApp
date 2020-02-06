@@ -17,8 +17,8 @@ buildDebug:
   script:
     - ./gradlew :android:assembleDebug
     - ./gradlew packForXcode
-    - cd ./ios/TodoApp
     - bundle update --bundler
+    - cd ./ios/TodoApp
     - fastlane beta
   tags:
     - android
