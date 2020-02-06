@@ -14,14 +14,14 @@
 # update_fastlane
 
 default_platform(:ios)
-xcversion(version: "11.3.1")
+xcversion(version: "11.3")
 
 platform :ios do
 
   desc "build"
   lane :beta do
     cocoapods
-    match(type: "development", readonly: true)
+    # match(type: "development", readonly: true)
     gym(
         export_method: "development",
         configuration: "Debug",
