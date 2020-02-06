@@ -34,14 +34,6 @@ jobs:
       osx_image: xcode11.3
       script:
         - ./gradlew :interaction:macosTest
-      before_cache:
-        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-      cache:
-        directories:
-          - $HOME/.gradle/caches/
-          - $HOME/.gradle/wrapper/
-          - $HOME/.konan/
 
     - name: Check Android interaction
       language: android
@@ -85,14 +77,3 @@ jobs:
         - cd ./ios/TodoApp
         - bundle update --bundler
         - fastlane beta
-      podfile: ios/TodoApp/Podfile
-      before_cache:
-        - rm -f  $HOME/.gradle/caches/modules-2/modules-2.lock
-        - rm -fr $HOME/.gradle/caches/*/plugin-resolution/
-      cache:
-        cocoapods: true
-        bundler: true
-        directories:
-          - $HOME/.gradle/caches/
-          - $HOME/.gradle/wrapper/
-          - $HOME/.konan/
