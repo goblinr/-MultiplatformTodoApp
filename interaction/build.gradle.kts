@@ -76,6 +76,18 @@ kotlin {
     }
 }
 
+val makeXcodeFrameworkBuildDir by tasks.creating(Sync::class) {
+    val targetDir = File(buildDir, "xcode-frameworks")
+    targetDir.mkdirs()
+    val gradlew = File(targetDir, "gradlew")
+    gradlew.createNewFile()
+    gradlew.writeText("#!/bin/bash\n" +
+            "export 'JAVA_HOME=${System.getProperty("java.home")}'\n" +
+            "cd '${rootProject.rootDir}'\n" +
+            "./gradlew \$@\n")
+    gradlew.setExecutable(true)
+}
+
 val packForXcode by tasks.creating(Sync::class) {
     val targetDir = File(buildDir, "xcode-frameworks")
 

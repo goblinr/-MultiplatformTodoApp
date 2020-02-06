@@ -40,6 +40,6 @@ jobs:
         - bundle install
       script:
         - ./gradlew :interaction:macosTest
-        - ./gradlew packForXcode
+        - ./gradlew makeXcodeFrameworkBuildDir
         - cd ./ios/TodoApp
         - fastlane beta
