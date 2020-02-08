@@ -9,6 +9,8 @@
 import XCTest
 
 class TodoAppUITests: XCTestCase {
+    
+    let timeout = TimeInterval(10)
 
     override func setUp() {
         // Put setup code here. This method is called before the invocation of each test method in the class.
@@ -23,21 +25,14 @@ class TodoAppUITests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
 
-    func testExample() {
+    func testMainScreen() {
         // UI tests must launch the application that they test.
         let app = XCUIApplication()
+        app.launchArguments = ["testing"]
         app.launch()
 
-        // Use recording to get started writing UI tests.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-    }
-
-    func testLaunchPerformance() {
-        if #available(macOS 10.15, iOS 13.0, tvOS 13.0, *) {
-            // This measures how long it takes to launch your application.
-            measure(metrics: [XCTOSSignpostMetric.applicationLaunch]) {
-                XCUIApplication().launch()
-            }
-        }
+        XCTAssertTrue(app.wait(for: .runningForeground, timeout: timeout))
+        XCTAssertTrue(app.staticTexts["One"].waitForExistence(timeout: timeout))
+        XCTAssertTrue(app.staticTexts["Two"].waitForExistence(timeout: timeout))
     }
 }

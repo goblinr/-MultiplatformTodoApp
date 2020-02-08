@@ -36,6 +36,7 @@ jobs:
       language: swift
       os: osx
       osx_image: xcode11.3
+      xcode_destination: platform=iOS Simulator,OS=13.3,name=iPhone X
       install:
         - bundle install
       script:

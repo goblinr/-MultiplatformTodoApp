@@ -8,6 +8,8 @@
 
 import UIKit
 import SwiftUI
+import EasyDi
+import Interaction
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -20,7 +22,13 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        let contentView = MainAssemly.instance().view
+        let context = DIContext()
+        #if DEBUG
+        if CommandLine.arguments.contains("testing") {
+            configureTestingState(context)
+        }
+        #endif
+        let contentView = MainAssemly.instance(from: context).view
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
@@ -60,6 +68,15 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Use this method to save data, release shared resources, and store enough scene-specific state information
         // to restore the scene back to its current state.
     }
+    
+    #if DEBUG
+    private func configureTestingState(_ context: DIContext) {
+        RepositoryAssembly.instance(from: context)
+        .addSubstitution(for: "taskRepository") { () -> TaskRepository in
+            return MockTaskRepository()
+        }
+    }
+    #endif
 
 
 }

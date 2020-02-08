@@ -102,7 +102,6 @@ final class NetworkTaskRepository : AbstractTaskRepository {
 final class MockTaskRepository : AbstractTaskRepository {
     
     override func blockingTasks(success: @escaping ([Task]) -> Void, error: @escaping (KotlinThrowable) -> Void) {
-        Thread.sleep(forTimeInterval: 2)
         success(
             FreezeKt.freezeTaskList(list: [
                 Task(id: "1", title: "One", description: "First task", status: TaskStatus.pending),
@@ -123,7 +122,6 @@ final class MockTaskRepository : AbstractTaskRepository {
     }
     
     override func blockingCreateTask(title: String, description: String, success: @escaping (Task) -> Void, error: @escaping (KotlinThrowable) -> Void) {
-        Thread.sleep(forTimeInterval: 2)
         success(
             FreezeKt.createTask(
                 id: "id",

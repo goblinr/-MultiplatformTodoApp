@@ -1,0 +1,5 @@
+workspace("TodoApp.xcworkspace")
+scheme("TodoApp")
+device("iPhone 11 Pro Max")
+
+output_types("html")
