@@ -11,7 +11,7 @@ import Interaction
 
 final class CreateTaskViewModel : ObservableObject {
     
-    var container: Container<CreateState, CreateAction>?
+    var container: IosContainer<CreateState, CreateAction>?
     var mainStore: Store<MainState, MainAction>?
     
     var isLoading = false
@@ -39,8 +39,8 @@ final class CreateTaskViewModel : ObservableObject {
 
 final class CreateTaskFactory {
     
-    static func create(schedulers: Schedulers, model: CreateTaskViewModel) -> Container<CreateState, CreateAction> {
-        return Container<CreateState, CreateAction>(schedulers) { state in
+    static func create(schedulers: Schedulers, model: CreateTaskViewModel) -> IosContainer<CreateState, CreateAction> {
+        return IosContainer<CreateState, CreateAction>(schedulers: schedulers) { state in
             print(state)
             model.isLoading = state.isLoading
             model.error = state.error

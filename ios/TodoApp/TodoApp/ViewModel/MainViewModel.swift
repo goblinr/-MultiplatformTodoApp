@@ -13,7 +13,7 @@ final class MainViewModel : ObservableObject {
 
     var schedulers: Schedulers?
     var router: SwiftRouter?
-    var container: Container<MainState, MainAction>?
+    var container: IosContainer<MainState, MainAction>?
 
     var screen: Screen? = nil
     var backstack: Array<Screen>? = nil
@@ -31,8 +31,8 @@ final class MainViewModel : ObservableObject {
 
 final class MainContainerFactory {
     
-    static func create(schedulers: Schedulers, model: MainViewModel) -> Container<MainState, MainAction> {
-        return Container<MainState, MainAction>(schedulers) { state in
+    static func create(schedulers: Schedulers, model: MainViewModel) -> IosContainer<MainState, MainAction> {
+        return IosContainer<MainState, MainAction>(schedulers: schedulers) { state in
             print(state)
             model.screen = state.screen
             model.backstack = state.backStack
