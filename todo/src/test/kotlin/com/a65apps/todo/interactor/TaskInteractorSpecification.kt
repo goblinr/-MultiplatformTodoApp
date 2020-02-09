@@ -176,4 +176,32 @@ class TaskInteractorSpecification {
             result.statusCode
         )
     }
+
+    @Test
+    fun `it should return all tasks with status ARCHIVED`() {
+        val tasks = listOf(
+            Task("1", "title1", "description1", TaskStatus.PENDING),
+            Task("2", "title2", "description2", TaskStatus.DONE),
+            Task("3", "title3", "description3", TaskStatus.ARCHIVED),
+            Task("4", "title4", "description4", TaskStatus.ARCHIVED)
+        )
+        val expected = listOf(
+            Task("3", "title3", "description3", TaskStatus.ARCHIVED),
+            Task("4", "title4", "description4", TaskStatus.ARCHIVED)
+        )
+        `when`(taskRepository.tasks()).thenReturn(tasks)
+
+        val result = interactor.archivedTasks()
+
+        assertEquals(
+            "result is different, expected: $expected actual: ${result.body}",
+            expected,
+            result.body
+        )
+        assertEquals(
+            "status code is OK",
+            HttpStatus.OK,
+            result.statusCode
+        )
+    }
 }

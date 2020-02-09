@@ -21,4 +21,10 @@ interface TaskApi {
 
     @POST("tasks/archive")
     fun archiveTasks(): Completable
+
+    @PATCH("tasks/archive/{id}")
+    fun unarchiveTask(@Path("id") id: String): Completable
+
+    @GET("tasks/archive")
+    fun archivedTasks(): Single<List<TaskJson>>
 }

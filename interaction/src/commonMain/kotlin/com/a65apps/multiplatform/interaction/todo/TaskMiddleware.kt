@@ -110,3 +110,16 @@ class ChangedTaskMiddleware(
     ): Observable<TodoAction> = taskRepository.changed()
         .map { TodoAction.Load }
 }
+
+class GoToArchiveMiddleware(
+    private val mainStore: Store<MainState, MainAction>
+) : Middleware<TodoAction, TodoState> {
+    override fun bind(
+        actions: Observable<TodoAction>,
+        state: Observable<TodoState>
+    ): Observable<TodoAction> = actions.ofType<TodoAction.GoToArchive>()
+        .map {
+            mainStore.acceptAction(MainAction.NavigateForward(Screen.ARCHIVE_LIST))
+            TodoAction.Idle
+        }
+}

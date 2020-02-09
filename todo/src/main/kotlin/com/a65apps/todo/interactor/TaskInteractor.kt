@@ -59,4 +59,34 @@ class TaskInteractor @Autowired constructor(
                         it.copy(status = TaskStatus.ARCHIVED)
                     })
             )
+
+    fun unarchiveTasks(): ResponseEntity<Unit> =
+        ResponseEntity.status(HttpStatus.OK)
+            .body(
+                repository.save(repository.tasks()
+                    .filter { it.status == TaskStatus.ARCHIVED }
+                    .map {
+                        it.copy(status = TaskStatus.DONE)
+                    })
+            )
+
+    fun unarchiveTask(id: String): ResponseEntity<Any> {
+        val task = repository.getTask(id)
+        if (task != null) {
+            val unarchivedTask = task.copy(
+                status = TaskStatus.DONE
+            )
+            return ResponseEntity.status(HttpStatus.OK)
+                .body(repository.save(unarchivedTask))
+        }
+
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+            .body(ErrorResponse("Not found"))
+    }
+
+    fun archivedTasks(): ResponseEntity<List<Task>> = ResponseEntity.status(HttpStatus.OK)
+        .body(
+            repository.tasks()
+                .filter { it.status == TaskStatus.ARCHIVED }
+        )
 }

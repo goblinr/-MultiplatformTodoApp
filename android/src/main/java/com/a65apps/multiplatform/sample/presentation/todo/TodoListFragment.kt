@@ -3,6 +3,9 @@ package com.a65apps.multiplatform.sample.presentation.todo
 import android.os.Bundle
 import android.os.Parcelable
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
+import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
@@ -19,7 +22,12 @@ import com.a65apps.multiplatform.sample.presentation.base.BaseFragment
 import com.a65apps.multiplatform.sample.presentation.base.BaseViewModel
 import javax.inject.Inject
 import kotlinx.android.parcel.Parcelize
-import kotlinx.android.synthetic.main.fragment_todo_list.*
+import kotlinx.android.synthetic.main.fragment_todo_list.archiveBtn
+import kotlinx.android.synthetic.main.fragment_todo_list.createBtn
+import kotlinx.android.synthetic.main.fragment_todo_list.errorTxt
+import kotlinx.android.synthetic.main.fragment_todo_list.root
+import kotlinx.android.synthetic.main.fragment_todo_list.todoListRv
+import kotlinx.android.synthetic.main.fragment_todo_list.updateStr
 
 class TodoListViewModel @Inject constructor(
     store: Store<TodoState, TodoAction>,
@@ -39,6 +47,11 @@ class TodoListFragment : BaseFragment<TodoState, TodoAction, TodoParcelable, Tod
         get() = TodoListViewModel::class.java
 
     private var todoAdapter: TodoListAdapter? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -107,4 +120,19 @@ class TodoListFragment : BaseFragment<TodoState, TodoAction, TodoParcelable, Tod
             error = error,
             showArchive = showArchive
         )
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.todo_menu, menu)
+        super.onCreateOptionsMenu(menu, inflater)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.action_archive -> {
+                viewModel.acceptAction(TodoAction.GoToArchive)
+                false
+            }
+            else -> super.onOptionsItemSelected(item)
+        }
+    }
 }

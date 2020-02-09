@@ -3,6 +3,7 @@ package com.a65apps.multiplatform.sample.presentation.navigation
 import androidx.fragment.app.Fragment
 import com.a65apps.multiplatform.interaction.navigation.Route
 import com.a65apps.multiplatform.interaction.navigation.Screen as DomainScreen
+import com.a65apps.multiplatform.sample.presentation.archive.ArchiveListFragment
 import com.a65apps.multiplatform.sample.presentation.create.CreateFragment
 import com.a65apps.multiplatform.sample.presentation.todo.TodoListFragment
 import ru.terrakok.cicerone.Screen
@@ -13,6 +14,7 @@ object Screens {
     fun transform(route: Route): Screen = when (route.screen) {
         DomainScreen.TODO_LIST -> TodoListScreen()
         DomainScreen.CREATE_TASK -> CreateTaskScreen()
+        DomainScreen.ARCHIVE_LIST -> ArchiveListScreen()
     }
 }
 
@@ -24,4 +26,9 @@ class TodoListScreen : SupportAppScreen() {
 class CreateTaskScreen : SupportAppScreen() {
 
     override fun getFragment(): Fragment = CreateFragment()
+}
+
+class ArchiveListScreen : SupportAppScreen() {
+
+    override fun getFragment(): Fragment = ArchiveListFragment()
 }

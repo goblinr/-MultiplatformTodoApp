@@ -4,6 +4,7 @@ import com.a65apps.multiplatform.interaction.main.MainState
 import com.a65apps.multiplatform.sample.di.ComponentBuilder
 import com.a65apps.multiplatform.sample.di.ViewModelComponent
 import com.a65apps.multiplatform.sample.di.ViewModelComponentBuilder
+import com.a65apps.multiplatform.sample.di.archive.ArchiveListViewModelModule
 import com.a65apps.multiplatform.sample.di.create.CreateViewModelModule
 import com.a65apps.multiplatform.sample.di.todo.TodoListViewModelModule
 import com.a65apps.multiplatform.sample.presentation.main.MainViewModel
@@ -34,7 +35,8 @@ interface MainViewModelModule {
         modules = [
             MainModule::class,
             TodoListViewModelModule::class,
-            CreateViewModelModule::class
+            CreateViewModelModule::class,
+            ArchiveListViewModelModule::class
         ]
     )
     interface MainSubcomponent : ViewModelComponent<MainState, MainViewModel> {

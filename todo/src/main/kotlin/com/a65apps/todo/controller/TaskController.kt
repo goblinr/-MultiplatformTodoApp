@@ -26,4 +26,10 @@ class TaskController @Autowired constructor(
 
     @PostMapping("/tasks/archive")
     fun archiveTasks() = interactor.archiveTasks()
+
+    @PatchMapping("/tasks/archive/{id}")
+    fun unarchiveTask(@PathVariable id: String) = interactor.unarchiveTask(id)
+
+    @GetMapping("/tasks/archive")
+    fun archivedTasks() = interactor.archivedTasks()
 }

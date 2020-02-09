@@ -20,4 +20,6 @@ sealed class TodoAction : Action {
     data class Error(val message: String) : TodoAction()
 
     object CreateTask : TodoAction()
+
+    object GoToArchive : TodoAction()
 }
