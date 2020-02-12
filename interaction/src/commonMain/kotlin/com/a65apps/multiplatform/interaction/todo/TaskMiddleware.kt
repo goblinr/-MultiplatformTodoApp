@@ -13,6 +13,7 @@ import com.badoo.reaktive.observable.Observable
 import com.badoo.reaktive.observable.flatMapSingle
 import com.badoo.reaktive.observable.map
 import com.badoo.reaktive.observable.ofType
+import com.badoo.reaktive.observable.threadLocal
 import com.badoo.reaktive.single.map
 import com.badoo.reaktive.single.onErrorReturn
 import com.badoo.reaktive.single.singleOf
@@ -27,6 +28,7 @@ class TaskLoadMiddleware(
         actions: Observable<TodoAction>,
         state: Observable<TodoState>
     ): Observable<TodoAction> = actions.ofType<TodoAction.Load>()
+        .threadLocal()
         .flatMapSingle {
             taskRepository.allTasks()
                 .subscribeOn(schedulers.io)

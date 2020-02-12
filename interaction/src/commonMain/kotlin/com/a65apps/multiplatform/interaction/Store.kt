@@ -8,6 +8,7 @@ import com.badoo.reaktive.observable.distinctUntilChanged
 import com.badoo.reaktive.observable.firstOrError
 import com.badoo.reaktive.observable.merge
 import com.badoo.reaktive.observable.subscribe
+import com.badoo.reaktive.observable.threadLocal
 import com.badoo.reaktive.single.map
 import com.badoo.reaktive.subject.publish.PublishSubject
 
@@ -38,6 +39,7 @@ open class Store<S : State, A : Action>(
             .subscribe { states.onNext(it) }
 
         disposable += merge(*middleware.map { it.bind(actions, states) }.toTypedArray())
+            .threadLocal()
             .subscribe { actions.onNext(it) }
     }
 
