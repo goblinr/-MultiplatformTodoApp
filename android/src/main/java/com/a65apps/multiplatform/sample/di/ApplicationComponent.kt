@@ -1,21 +1,27 @@
 package com.a65apps.multiplatform.sample.di
 
+import android.content.Context
+import com.a65apps.multiplatform.interaction.Schedulers
 import com.a65apps.multiplatform.sample.di.data.AppDataModule
-import com.a65apps.multiplatform.sample.di.main.MainActivityModule
-import com.a65apps.multiplatform.sample.di.main.MainViewModelModule
-import com.a65apps.multiplatform.sample.di.navigation.NavigationModule
+import com.a65apps.multiplatform.sample.di.main.MainComponent
+import dagger.BindsInstance
 import dagger.Component
-import dagger.android.AndroidInjector
-import dagger.android.support.AndroidSupportInjectionModule
 import javax.inject.Singleton
 
 @Component(modules = [
-    AndroidSupportInjectionModule::class,
-    MainActivityModule::class,
-    NavigationModule::class,
     SchedulersModule::class,
-    MainViewModelModule::class,
-    AppDataModule::class
+    AppDataModule::class,
+    ApplicationModule::class
 ])
 @Singleton
-interface ApplicationComponent : AndroidInjector<TodoApplication>
+interface ApplicationComponent {
+
+    val mainComponentFactory: MainComponent.Factory
+
+    val schedulers: Schedulers
+
+    @Component.Factory
+    interface Factory {
+        fun create(@BindsInstance context: Context): ApplicationComponent
+    }
+}

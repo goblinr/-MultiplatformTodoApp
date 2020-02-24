@@ -35,14 +35,18 @@ open class Store<S : State, A : Action>(
             states.firstOrError()
                 .map { latest -> reducer.reduce(latest, action) }
         }.distinctUntilChanged()
-            .subscribe { states.onNext(it) }
+            .subscribe(onNext = states::onNext)
 
-        disposable += merge(*middleware.map { it.bind(actions, states) }.toTypedArray())
-            .subscribe { actions.onNext(it) }
+        disposable += middleware.map { it.bind(actions, states) }.merge()
+            .subscribe(onNext = actions::onNext)
     }
 
     fun acceptAction(action: A) {
         actions.onNext(action)
+    }
+    fun acceptUnsafeAction(action: Action) {
+        @Suppress("UNCHECKED_CAST")
+        actions.onNext(action as A)
     }
 
     fun states(): Observable<S> = states

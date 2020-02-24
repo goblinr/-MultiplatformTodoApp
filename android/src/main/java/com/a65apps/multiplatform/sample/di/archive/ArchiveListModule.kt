@@ -17,6 +17,12 @@ import com.a65apps.multiplatform.interaction.data.TaskRepository
 import dagger.Module
 import dagger.Provides
 import dagger.multibindings.IntoSet
+import javax.inject.Scope
+
+@Scope
+@MustBeDocumented
+@Retention(AnnotationRetention.RUNTIME)
+annotation class ArchiveListScope
 
 @Module
 class ArchiveListModule {

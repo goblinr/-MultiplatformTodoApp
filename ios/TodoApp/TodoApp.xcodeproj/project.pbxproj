@@ -11,13 +11,9 @@
 		302FFE9023D9E73A0016454B /* DarkModeFix.swift in Sources */ = {isa = PBXBuildFile; fileRef = 302FFE8F23D9E73A0016454B /* DarkModeFix.swift */; };
 		3057B1B923CDE21600B24E51 /* CreateTaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057B1B823CDE21600B24E51 /* CreateTaskView.swift */; };
 		3057B1BB23CDE77100B24E51 /* CreateTaskViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3057B1BA23CDE77100B24E51 /* CreateTaskViewModel.swift */; };
-		308ADB6A23D46398007F1595 /* MainAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308ADB6923D46398007F1595 /* MainAssembly.swift */; };
 		308ADB6C23D46984007F1595 /* SchedulersAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308ADB6B23D46984007F1595 /* SchedulersAssembly.swift */; };
 		308ADB6E23D4743F007F1595 /* NavigationAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308ADB6D23D4743F007F1595 /* NavigationAssembly.swift */; };
-		308ADB7023D48EAF007F1595 /* TodoListAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308ADB6F23D48EAF007F1595 /* TodoListAssembly.swift */; };
 		308ADB7223D48FF3007F1595 /* RepositoryAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308ADB7123D48FF3007F1595 /* RepositoryAssembly.swift */; };
-		308ADB7423D497A8007F1595 /* CreateTaskAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = 308ADB7323D497A8007F1595 /* CreateTaskAssembly.swift */; };
-		30B324AF23CA1A060090D316 /* SwiftUIRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B324AE23CA1A060090D316 /* SwiftUIRouter.swift */; };
 		30B324B223CA2FCA0090D316 /* MainViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B324B123CA2FCA0090D316 /* MainViewModel.swift */; };
 		30B324B623CA555F0090D316 /* TodoListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B324B523CA555F0090D316 /* TodoListView.swift */; };
 		30B324B823CC41320090D316 /* TodoListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30B324B723CC41320090D316 /* TodoListViewModel.swift */; };
@@ -33,6 +29,7 @@
 		30DED80E23C7037E00CEB4AC /* TodoAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30DED80D23C7037E00CEB4AC /* TodoAppTests.swift */; };
 		30DED81923C7037E00CEB4AC /* TodoAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30DED81823C7037E00CEB4AC /* TodoAppUITests.swift */; };
 		30DED84023C7578400CEB4AC /* TaskView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30DED83F23C7578400CEB4AC /* TaskView.swift */; };
+		30F26311242CA1EE001AAF2B /* ViewState.swift in Sources */ = {isa = PBXBuildFile; fileRef = 30F26310242CA1EE001AAF2B /* ViewState.swift */; };
 		468B8F49A3ECC1F35703D24A /* Pods_TodoAppTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B9128D31C18B8575702B8DE /* Pods_TodoAppTests.framework */; };
 		FD956C72B5F5060AD626BF0C /* Pods_TodoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7DA40C5F6585DA7D09AA8642 /* Pods_TodoApp.framework */; };
 /* End PBXBuildFile section */
@@ -74,13 +71,9 @@
 		302FFE8F23D9E73A0016454B /* DarkModeFix.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DarkModeFix.swift; sourceTree = "<group>"; };
 		3057B1B823CDE21600B24E51 /* CreateTaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskView.swift; sourceTree = "<group>"; };
 		3057B1BA23CDE77100B24E51 /* CreateTaskViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskViewModel.swift; sourceTree = "<group>"; };
-		308ADB6923D46398007F1595 /* MainAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainAssembly.swift; sourceTree = "<group>"; };
 		308ADB6B23D46984007F1595 /* SchedulersAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SchedulersAssembly.swift; sourceTree = "<group>"; };
 		308ADB6D23D4743F007F1595 /* NavigationAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavigationAssembly.swift; sourceTree = "<group>"; };
-		308ADB6F23D48EAF007F1595 /* TodoListAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListAssembly.swift; sourceTree = "<group>"; };
 		308ADB7123D48FF3007F1595 /* RepositoryAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RepositoryAssembly.swift; sourceTree = "<group>"; };
-		308ADB7323D497A8007F1595 /* CreateTaskAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateTaskAssembly.swift; sourceTree = "<group>"; };
-		30B324AE23CA1A060090D316 /* SwiftUIRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIRouter.swift; sourceTree = "<group>"; };
 		30B324B123CA2FCA0090D316 /* MainViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainViewModel.swift; sourceTree = "<group>"; };
 		30B324B523CA555F0090D316 /* TodoListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListView.swift; sourceTree = "<group>"; };
 		30B324B723CC41320090D316 /* TodoListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoListViewModel.swift; sourceTree = "<group>"; };
@@ -103,6 +96,7 @@
 		30DED81823C7037E00CEB4AC /* TodoAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TodoAppUITests.swift; sourceTree = "<group>"; };
 		30DED81A23C7037E00CEB4AC /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		30DED83F23C7578400CEB4AC /* TaskView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TaskView.swift; sourceTree = "<group>"; };
+		30F26310242CA1EE001AAF2B /* ViewState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewState.swift; sourceTree = "<group>"; };
 		418A2B80478766FD590BCC69 /* Pods-TodoApp-TodoAppUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-TodoApp-TodoAppUITests.release.xcconfig"; path = "Target Support Files/Pods-TodoApp-TodoAppUITests/Pods-TodoApp-TodoAppUITests.release.xcconfig"; sourceTree = "<group>"; };
 		7B9128D31C18B8575702B8DE /* Pods_TodoAppTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodoAppTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7DA40C5F6585DA7D09AA8642 /* Pods_TodoApp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_TodoApp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -144,12 +138,9 @@
 		308ADB6823D4635C007F1595 /* DI */ = {
 			isa = PBXGroup;
 			children = (
-				308ADB6923D46398007F1595 /* MainAssembly.swift */,
 				308ADB6B23D46984007F1595 /* SchedulersAssembly.swift */,
 				308ADB6D23D4743F007F1595 /* NavigationAssembly.swift */,
-				308ADB6F23D48EAF007F1595 /* TodoListAssembly.swift */,
 				308ADB7123D48FF3007F1595 /* RepositoryAssembly.swift */,
-				308ADB7323D497A8007F1595 /* CreateTaskAssembly.swift */,
 			);
 			path = DI;
 			sourceTree = "<group>";
@@ -166,17 +157,10 @@
 			path = Ui;
 			sourceTree = "<group>";
 		};
-		30B324AD23CA19BF0090D316 /* Navigation */ = {
-			isa = PBXGroup;
-			children = (
-				30B324AE23CA1A060090D316 /* SwiftUIRouter.swift */,
-			);
-			path = Navigation;
-			sourceTree = "<group>";
-		};
 		30B324B023CA2F9E0090D316 /* ViewModel */ = {
 			isa = PBXGroup;
 			children = (
+				30F26310242CA1EE001AAF2B /* ViewState.swift */,
 				30B324B123CA2FCA0090D316 /* MainViewModel.swift */,
 				30B324B723CC41320090D316 /* TodoListViewModel.swift */,
 				3057B1BA23CDE77100B24E51 /* CreateTaskViewModel.swift */,
@@ -220,7 +204,6 @@
 				308ADB6823D4635C007F1595 /* DI */,
 				30B324B923CC536A0090D316 /* Data */,
 				30B324B023CA2F9E0090D316 /* ViewModel */,
-				30B324AD23CA19BF0090D316 /* Navigation */,
 				30B324AC23CA194B0090D316 /* Ui */,
 				30DED7F623C7037B00CEB4AC /* AppDelegate.swift */,
 				30DED7F823C7037B00CEB4AC /* SceneDelegate.swift */,
@@ -546,21 +529,18 @@
 				30DED7F723C7037B00CEB4AC /* AppDelegate.swift in Sources */,
 				30B324B823CC41320090D316 /* TodoListViewModel.swift in Sources */,
 				308ADB7223D48FF3007F1595 /* RepositoryAssembly.swift in Sources */,
-				308ADB7023D48EAF007F1595 /* TodoListAssembly.swift in Sources */,
 				308ADB6C23D46984007F1595 /* SchedulersAssembly.swift in Sources */,
 				30DED7F923C7037B00CEB4AC /* SceneDelegate.swift in Sources */,
 				3057B1BB23CDE77100B24E51 /* CreateTaskViewModel.swift in Sources */,
 				30B324B223CA2FCA0090D316 /* MainViewModel.swift in Sources */,
-				308ADB7423D497A8007F1595 /* CreateTaskAssembly.swift in Sources */,
 				308ADB6E23D4743F007F1595 /* NavigationAssembly.swift in Sources */,
 				30B324BF23CC77720090D316 /* NetworkTaskRepository.swift in Sources */,
 				30DED7FB23C7037B00CEB4AC /* ContentView.swift in Sources */,
 				30B324B623CA555F0090D316 /* TodoListView.swift in Sources */,
 				3057B1B923CDE21600B24E51 /* CreateTaskView.swift in Sources */,
-				30B324AF23CA1A060090D316 /* SwiftUIRouter.swift in Sources */,
+				30F26311242CA1EE001AAF2B /* ViewState.swift in Sources */,
 				30DED84023C7578400CEB4AC /* TaskView.swift in Sources */,
 				302FFE9023D9E73A0016454B /* DarkModeFix.swift in Sources */,
-				308ADB6A23D46398007F1595 /* MainAssembly.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

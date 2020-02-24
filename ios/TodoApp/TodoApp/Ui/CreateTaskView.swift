@@ -12,9 +12,7 @@ import EasyDi
 
 struct CreateTaskView: View {
     
-    @ObservedObject var model: CreateTaskViewModel
-    var context: DIContext
-    var inputData: Any?
+    let model: CreateTaskViewModel
     
     @SwiftUI.State private var title = ""
     @SwiftUI.State private var description = ""
@@ -25,21 +23,11 @@ struct CreateTaskView: View {
             
             if model.result == nil {
                 TextField("Title", text: $title, onEditingChanged: { value in
-                    self.model.acceptAction(
-                        action: CreateAction.UpdateField(
-                            value: self.title,
-                            type: FieldType.title
-                        )
-                    )
+                    self.model.onTitleChanged(self.title)
                 }).padding()
                 
                 TextField("Description", text: $description, onEditingChanged: { value in
-                    self.model.acceptAction(
-                        action: CreateAction.UpdateField(
-                            value: self.description,
-                            type: FieldType.description_
-                        )
-                    )
+                    self.model.onDescriptionChanged(self.description)
                 }).padding()
             } else {
                 Text(model.result?.title ?? "")
@@ -62,62 +50,41 @@ struct CreateTaskView: View {
             
             if model.result == nil {
                 Button(
-                    action: { self.model.acceptAction(action: CreateAction.Create()) },
+                    action: model.onSubmitClicked,
                     label: { Text("Create") }
                     ).padding()
                     .disabled(model.isLoading)
             }
     }.navigationBarTitle(Screen.createTask.description())
             .navigationBarItems(leading: Button(
-                action: { self.model.navigateBack() },
+                action: model.onBack,
                 label: { Text("< Back") }
             ), trailing: EmptyView()
-        ).onAppear() {
-            self.model.onAppear(store: CreateTaskAssembly.instance(from: self.context).createTaskStore)
-        }.onDisappear() {
-            self.model.onDisappear()
-        }
+        )
     }
 }
 
 #if DEBUG
 struct CreateTaskView_Previews: PreviewProvider {
     
-    static var listState: CreateTaskViewModel {
-        get {
-            let model = CreateTaskViewModel()
-            return model
-        }
-    }
+    static let listState = CreateTaskViewModel()
     
-    static var loadingState: CreateTaskViewModel {
-        get {
-            let model = CreateTaskViewModel()
-            model.isLoading = true
-            return model
-        }
-    }
+    static let loadingState = CreateTaskViewModel(
+        isLoading: true
+    )
     
-    static var errorState: CreateTaskViewModel {
-        get {
-            let model = CreateTaskViewModel()
-            model.error = "Error"
-            return model
-        }
-    }
+    static let errorState = CreateTaskViewModel(
+        error: "Error"
+    )
     
-    static var resultState: CreateTaskViewModel {
-        get {
-            let model = CreateTaskViewModel()
-            model.result = Task(
-                id: "id",
-                title: "title",
-                description: "description",
-                status: TaskStatus.pending
-            )
-            return model
-        }
-    }
+    static let resultState = CreateTaskViewModel(
+        result: Task(
+            id: "id",
+            title: "title",
+            description: "description",
+            status: TaskStatus.pending
+        )
+    )
     
     static var data: Array<(key: String, value: CreateTaskViewModel)> {
         return [
@@ -133,14 +100,10 @@ struct CreateTaskView_Previews: PreviewProvider {
             ForEach(data, id: \.key) { entry in
                 Group {
                     CreateTaskView(
-                        model: entry.value,
-                        context: DIContext(),
-                        inputData: nil
+                        model: entry.value
                     ).previewDisplayName(entry.key)
                     CreateTaskView(
-                        model: entry.value,
-                        context: DIContext(),
-                        inputData: nil
+                        model: entry.value
                     ).previewDisplayName("\(entry.key) Dark")
                     .darkModeFix()
                 }

@@ -30,19 +30,13 @@ struct ProgressBar : View {
 
 struct TodoListView: View {
     
-    @ObservedObject var model: TodoListViewModel
-    var context: DIContext
-    var inputData: Any?
+    let model: TodoListViewModel
     
     var body: some View {
         ZStack {
             List(model.tasks) { task in
                 TaskView(task: task).onTapGesture {
-                    self.model.acceptAction(
-                        action: TodoAction.Switch(
-                            id: task.id
-                        )
-                    )
+                    self.model.onSwitchTask(task.id)
                 }
             }
             
@@ -58,81 +52,51 @@ struct TodoListView: View {
             leading: EmptyView(),
             trailing: HStack {
                 Button(
-                    action: { self.model.acceptAction(action: TodoAction.CreateTask()) },
+                    action: model.onCreateTask,
                     label: { Text("Create") }
                 )
                 if model.showArchive {
                     Button(
-                        action: { self.model.acceptAction(action: TodoAction.Archive()) },
+                        action: model.onArchiveTasks,
                         label: { Text("Archive") }
                     )
                 }
                 Button(
-                    action: { self.model.acceptAction(action: TodoAction.Load()) },
+                    action: model.onRefresh,
                     label: { Text("Refresh") }
                 )
             }
-        ).onAppear() {
-            self.model.onAppear(store: TodoListAssembly.instance(from: self.context).todoListStore)
-        }.onDisappear() {
-            self.model.onDisappear()
-        }
+        )
     }
 }
 
 #if DEBUG
-
 struct TodoListView_Previews: PreviewProvider {
     
-    static var modelLoaded: TodoListViewModel {
-        get {
-            let instance = TodoListViewModel()
-            instance.isLoading = false
-            instance.tasks = [
-                TaskPresentable(id: "1", title: "One", description: "First task", status: TaskStatus.pending),
-                TaskPresentable(id: "2", title: "Two", description: "Second task", status: TaskStatus.done)
-            ]
-            instance.error = ""
-            instance.showArchive = true
-            return instance
-        }
-    }
+    static let modelLoaded = TodoListViewModel(
+        tasks: [
+            TaskPresentable(id: "1", title: "One", description: "First task", status: TaskStatus.pending),
+            TaskPresentable(id: "2", title: "Two", description: "Second task", status: TaskStatus.done)
+        ],
+        showArchive: true
+    )
     
-    static var modelLoading: TodoListViewModel {
-        get {
-            let instance = TodoListViewModel()
-            instance.isLoading = true
-            instance.tasks = []
-            instance.error = ""
-            instance.showArchive = false
-            return instance
-        }
-    }
+    static let modelLoading = TodoListViewModel(
+        isLoading: true
+    )
     
-    static var modelError: TodoListViewModel {
-        get {
-            let instance = TodoListViewModel()
-            instance.isLoading = false
-            instance.tasks = []
-            instance.error = "Error"
-            instance.showArchive = false
-            return instance
-        }
-    }
+    static let modelError = TodoListViewModel(
+        error: "Error"
+    )
     
-    static var modelWithContentError: TodoListViewModel {
-        get {
-            let instance = TodoListViewModel()
-            instance.isLoading = false
-            instance.tasks = [
-                TaskPresentable(id: "1", title: "One", description: "First task", status: TaskStatus.pending),
-                TaskPresentable(id: "2", title: "Two", description: "Second task", status: TaskStatus.done)
-            ]
-            instance.error = "Error"
-            instance.showArchive = false
-            return instance
-        }
-    }
+    static let modelWithContentError = TodoListViewModel(
+        error: "Error",
+        tasks: [
+            TaskPresentable(id: "1", title: "One", description: "First task", status: TaskStatus.pending),
+            TaskPresentable(id: "2", title: "Two", description: "Second task", status: TaskStatus.done)
+        ],
+        showArchive: true
+    )
     
     static var data: Array<(key: String, value: TodoListViewModel)> {
         return [
@@ -148,14 +112,10 @@ struct TodoListView_Previews: PreviewProvider {
             ForEach(data, id: \.key) { entry in
                 Group {
                     TodoListView(
-                        model: entry.value,
-                        context: DIContext(),
-                        inputData: nil
+                        model: entry.value
                     ).previewDisplayName(entry.key)
                     TodoListView(
-                        model: entry.value,
-                        context: DIContext(),
-                        inputData: nil
+                        model: entry.value
                     ).previewDisplayName("\(entry.key) Dark")
                     .environment(\.colorScheme, .dark)
                 }

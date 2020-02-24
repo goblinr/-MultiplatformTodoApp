@@ -1,10 +1,15 @@
 package com.a65apps.multiplatform.sample.di
 
-import dagger.android.AndroidInjector
-import dagger.android.support.DaggerApplication
+import android.app.Application
+import android.content.Context
 
-class TodoApplication : DaggerApplication() {
+class TodoApplication : Application() {
 
-    override fun applicationInjector(): AndroidInjector<out DaggerApplication> =
-        DaggerApplicationComponent.create()
+    val appComponent by lazy {
+        DaggerApplicationComponent.factory()
+            .create(this)
+    }
 }
+
+val Context.component: ApplicationComponent
+    get() = (applicationContext as TodoApplication).appComponent
