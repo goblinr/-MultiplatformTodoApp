@@ -44,9 +44,9 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation("org.jetbrains.kotlin:kotlin-stdlib-common")
-                implementation("com.badoo.reaktive:reaktive:$reaktiveVersion")
-                implementation("com.badoo.reaktive:reaktive-annotations:$reaktiveVersion")
+                api("com.badoo.reaktive:reaktive:$reaktiveVersion")
+                api("com.badoo.reaktive:reaktive-annotations:$reaktiveVersion")
+                api("com.badoo.reaktive:utils:$reaktiveVersion")
                 api(project(":domain"))
             }
         }
@@ -56,7 +56,12 @@ kotlin {
                 implementation("org.jetbrains.kotlin:kotlin-test-common")
                 implementation("org.jetbrains.kotlin:kotlin-test-annotations-common")
                 implementation("com.badoo.reaktive:reaktive-testing:$reaktiveVersion")
-                implementation("com.badoo.reaktive:utils:$reaktiveVersion")
+            }
+        }
+
+        val androidMain by getting {
+            dependencies {
+                api("com.badoo.reaktive:rxjava2-interop:$reaktiveVersion")
             }
         }
 

@@ -9,45 +9,73 @@
 import SwiftUI
 import Interaction
 
-final class CreateTaskViewModel : ObservableObject {
+struct CreateTaskViewModel : ViewState {
+    let isLoading: Bool
+    let error: String
+    let title: String
+    let description: String
+    let result: Task?
+    let onTitleChanged: (String) -> Void
+    let onDescriptionChanged: (String) -> Void
+    let onSubmitClicked: () -> Void
+    let onBack: () -> Void
     
-    var container: IosContainer<CreateState, CreateAction>?
-    var mainStore: Store<MainState, MainAction>?
-    
-    var isLoading = false
-    var error = ""
-    var title = ""
-    var description = ""
-    var result: Task? = nil
-    
-    func acceptAction(action: CreateAction) {
-        container?.acceptAction(action: action)
-    }
-    
-    func onAppear(store: Store<CreateState, CreateAction>) {
-        container?.onAppear(store: store)
-    }
-
-    func onDisappear() {
-        container?.onDisappear()
-    }
-    
-    func navigateBack() {
-        mainStore?.acceptAction(action: MainAction.NavigateBack())
+    init(
+        isLoading: Bool = false,
+        error: String = "",
+        title: String = "",
+        description: String = "",
+        result: Task? = nil,
+        onTitleChanged: @escaping (String) -> Void = {_ in },
+        onDescriptionChanged: @escaping (String) -> Void = {_ in },
+        onSubmitClicked: @escaping () -> Void = {},
+        onBack: @escaping () -> Void = {}
+    ) {
+        self.isLoading = isLoading
+        self.error = error
+        self.title = title
+        self.description = description
+        self.result = result
+        self.onTitleChanged = onTitleChanged
+        self.onDescriptionChanged = onDescriptionChanged
+        self.onSubmitClicked = onSubmitClicked
+        self.onBack = onBack
     }
 }
 
-final class CreateTaskFactory {
-    
-    static func create(schedulers: Schedulers, model: CreateTaskViewModel) -> IosContainer<CreateState, CreateAction> {
-        return IosContainer<CreateState, CreateAction>(schedulers: schedulers) { state in
-            print(state)
-            model.isLoading = state.isLoading
-            model.error = state.error
-            model.title = state.title
-            model.description = state.component4()
-            model.result = state.result
-            model.objectWillChange.send()
-        }
+extension CreateState {
+    func toViewModel(
+        actions: @escaping (Action) -> KotlinUnit,
+        mainActions: @escaping (MainAction) -> Void
+    ) -> CreateTaskViewModel {
+        return CreateTaskViewModel(
+            isLoading: isLoading,
+            error: error,
+            title: title,
+            description: component4(),
+            result: result,
+            onTitleChanged: { value in
+                _ = actions(
+                    CreateAction.UpdateField(
+                        value: value,
+                        type: FieldType.title
+                    )
+                )
+            },
+            onDescriptionChanged: { value in
+                _ = actions(
+                    CreateAction.UpdateField(
+                        value: value,
+                        type: FieldType.description_
+                    )
+                )
+            },
+            onSubmitClicked: {
+                _ = actions(CreateAction.Create())
+            },
+            onBack: {
+                mainActions(MainAction.NavigateBack())
+            }
+        )
     }
 }

@@ -14,7 +14,8 @@ import Interaction
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
     var window: UIWindow?
-
+    var application: ApplicationContainer?
+    let context = DIContext()
 
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         // Use this method to optionally configure and attach the UIWindow `window` to the provided UIWindowScene `scene`.
@@ -22,19 +23,46 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This delegate does not imply the connecting scene or session are new (see `application:configurationForConnectingSceneSession` instead).
 
         // Create the SwiftUI view that provides the window contents.
-        let context = DIContext()
+        
         #if DEBUG
         if CommandLine.arguments.contains("testing") {
             configureTestingState(context)
         }
         #endif
-        let contentView = MainAssemly.instance(from: context).view
+        let navigation = NavigationAssembly.instance(from: context)
+        let mainStore = navigation.mainStore
+        let navigator = navigation.navigator
+        let schedulers = SchedulersAssembly.instance(from: context).schedulers
+        let viewModel = MainViewModel()
+        application = ApplicationContainer(
+            navigator: navigator,
+            schedulers: schedulers,
+            states: { screen, state, actions in
+                viewModel.screen = screen
+                switch screen {
+                case Screen.todoList:
+                    viewModel.state = (state as! TodoState).toViewModel(actions: actions)
+                    break
+                case Screen.createTask:
+                    viewModel.state = (state as! CreateState).toViewModel(
+                        actions: actions,
+                        mainActions: { action in mainStore.acceptAction(action: action) }
+                    )
+                    break
+                default:
+                    break
+                }
+                viewModel.objectWillChange.send()
+            }
+        )
 
         // Use a UIHostingController as window root view controller.
         if let windowScene = scene as? UIWindowScene {
             let window = UIWindow(windowScene: windowScene)
             window.rootViewController = UIHostingController(
-                rootView: contentView
+                rootView: ContentView(
+                    model: viewModel
+                )
             )
             self.window = window
             window.makeKeyAndVisible()
@@ -46,6 +74,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // This occurs shortly after the scene enters the background, or when its session is discarded.
         // Release any resources associated with this scene that can be re-created the next time the scene connects.
         // The scene may re-connect later, as its session was not neccessarily discarded (see `application:didDiscardSceneSessions` instead).
+        application?.dispose()
     }
 
     func sceneDidBecomeActive(_ scene: UIScene) {

@@ -29,7 +29,7 @@ kotlin {
         }
     }
 
-    jvm("android")
+    jvm("jvm")
 
     sourceSets {
         val commonMain by getting {
@@ -38,9 +38,9 @@ kotlin {
             }
         }
 
-        val androidMain by getting {
+        val jvmMain by getting {
             dependencies {
-                api("org.jetbrains.kotlin:kotlin-stdlib")
+                api("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
             }
         }
     }

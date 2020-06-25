@@ -10,33 +10,6 @@ import SwiftUI
 import Interaction
 
 final class MainViewModel : ObservableObject {
-
-    var schedulers: Schedulers?
-    var router: SwiftRouter?
-    var container: IosContainer<MainState, MainAction>?
-
-    var screen: Screen? = nil
-    var backstack: Array<Screen>? = nil
-
-    func onAppear(navigator: Navigator, store: Store<MainState, MainAction>) {
-        router?.attachNavigator(navigator: navigator)
-        container?.onAppear(store: store)
-    }
-
-    func onDisappear() {
-        router?.detachNavigator()
-        container?.onDisappear()
-    }
-}
-
-final class MainContainerFactory {
-    
-    static func create(schedulers: Schedulers, model: MainViewModel) -> IosContainer<MainState, MainAction> {
-        return IosContainer<MainState, MainAction>(schedulers: schedulers) { state in
-            print(state)
-            model.screen = state.screen
-            model.backstack = state.backStack
-            model.objectWillChange.send()
-        }
-    }
+    var screen: Screen = Screen.todoList
+    var state: ViewState = TodoListViewModel()
 }
